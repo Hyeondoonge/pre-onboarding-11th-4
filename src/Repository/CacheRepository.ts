@@ -3,28 +3,36 @@ import { TResult, TCachedResult } from 'types/common';
 import { isCachedResult, isValidateExpiredTime } from 'utils/cache';
 
 interface CacheRepositoryInterface {
-  get: (keyword: string) => Promise<TResult>;
-  save: (keyword: string, result: TResult) => void;
+  get: (keyword: string) => Promise<TCachedResult>;
+  save: (keyword: string, result: TResult) => TCachedResult;
 }
 
-export default class CacheRepository implements CacheRepositoryInterface {
-  storage;
+class CacheRepository implements CacheRepositoryInterface {
+  #storage;
 
   constructor() {
-    this.storage = localStorage;
+    this.#storage = localStorage;
   }
 
   async get(keyword: string) {
     try {
-      const item = this.storage.getItem(keyword);
+      const item = this.#storage.getItem(keyword);
 
-      if (!isCachedResult(item) || !isValidateExpiredTime(item.expired_time)) {
+      if (!item) {
         const res = await getResult(keyword);
-        this.save(keyword, res);
-        return res;
+        const cachedResult = this.save(keyword, res);
+        return cachedResult;
       }
 
-      return JSON.parse(item) as TResult;
+      const parsedItem = JSON.parse(item);
+
+      if (!isCachedResult(parsedItem) || !isValidateExpiredTime(parsedItem.expired_time)) {
+        const res = await getResult(keyword);
+        const cachedResult = this.save(keyword, res);
+        return cachedResult;
+      }
+
+      return parsedItem;
     } catch (error) {
       // TODO: 에러 핸들링
       console.log('error');
@@ -39,6 +47,10 @@ export default class CacheRepository implements CacheRepositoryInterface {
     const expired_time = Date.now() + HOUR;
 
     const cachedResult: TCachedResult = { result, expired_time };
-    this.storage.setItem(keyword, JSON.stringify(cachedResult));
+    this.#storage.setItem(keyword, JSON.stringify(cachedResult));
+
+    return cachedResult;
   }
 }
+
+export const cacheRepository = new CacheRepository();

@@ -1,7 +1,6 @@
 import { TCachedResult } from 'types/common';
 
 export const isCachedResult = (data: any | TCachedResult): data is TCachedResult => {
-  if (!data) return false;
   if (!('expired_time' in data)) return false;
   if (!('result' in data)) return false;
   if (Array.isArray(data.result)) return false;
