@@ -1,6 +1,13 @@
+import CustomThemeProvider from 'contexts/UserThemeProvider';
+import GlobalStyle from 'styles/GlobalStyle';
+
 function App() {
   return (
-    <div />
+    <>
+      <CustomThemeProvider>
+        <GlobalStyle />
+      </CustomThemeProvider>
+    </>
   );
 }
 
