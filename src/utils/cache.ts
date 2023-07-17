@@ -13,7 +13,7 @@ export const isCachedResult = (data: any | TCachedResult): data is TCachedResult
   return true;
 };
 
-export const isValidateExpiredDate = (expired_time: number): boolean => {
+export const isValidateExpiredTime = (expired_time: number): boolean => {
   const currentTime = Date.now();
   return currentTime < expired_time;
 };

@@ -1,6 +1,6 @@
 import { getResult } from 'apis/search';
 import { TResult, TCachedResult } from 'types/common';
-import { isCachedResult, isValidateExpiredDate } from 'utils/cache';
+import { isCachedResult, isValidateExpiredTime } from 'utils/cache';
 
 interface CacheRepositoryInterface {
   get: (keyword: string) => Promise<TResult>;
@@ -18,7 +18,7 @@ export default class CacheRepository implements CacheRepositoryInterface {
     try {
       const item = this.storage.getItem(keyword);
 
-      if (!isCachedResult(item) || !isValidateExpiredDate(item.expired_time)) {
+      if (!isCachedResult(item) || !isValidateExpiredTime(item.expired_time)) {
         const res = await getResult(keyword);
         this.save(keyword, res);
         return res;
