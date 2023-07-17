@@ -15,7 +15,5 @@ export const isCachedResult = (data: any | TCachedResult): data is TCachedResult
 export const isValidateExpiredTime = (expired_time: number): boolean => {
   const currentTime = Date.now();
 
-  console.log(currentTime, expired_time);
-
   return currentTime < expired_time;
 };
