@@ -3,20 +3,28 @@ import ErrorBoundary from './ErrorBoundary';
 import ResultErrorFallback from './ResultErrorFallback';
 import { useEffect, useState } from 'react';
 
-export default function Result() {
+interface ResultProps {
+  keyword: string;
+}
+interface ListProps {
+  keyword: string;
+}
+
+export default function Result({ keyword }: ResultProps) {
   return (
     <StyledResult>
       <StyledBorder>
         <div />
       </StyledBorder>
       <ErrorBoundary fallback={<ResultErrorFallback />}>
-        <List />
+        <List keyword={keyword} />
       </ErrorBoundary>
     </StyledResult>
   );
 }
 
-function List() {
+function List({ keyword }: ListProps) {
+  // TODO: keyword로 하이라이팅
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const data = {
@@ -43,7 +51,8 @@ function List() {
 
   return (
     <StyledList>
-      {data.result.length === 0 && <StyledItem>검색결과가 없습니다.</StyledItem>}
+      {keyword === '' && <StyledItem>최근검색어가 없습니다.</StyledItem>}
+      {keyword !== '' && RESULT_LENGTH === 0 && <StyledItem>검색결과가 없습니다.</StyledItem>}
       {data.result
         .filter((_, index) => index < RESULT_LENGTH)
         .map(({ sickNm }, index) => (
