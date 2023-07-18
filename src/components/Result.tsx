@@ -1,15 +1,18 @@
 import { styled } from 'styled-components';
 
 export default function Result() {
-  const data = { result: [] }; // 목데이터
+  const data = {
+    result: []
+  }; // 목데이터
 
   return (
     <StyledResult>
-      <StyledSickList>
+      <StyledList>
+        {data.result.length === 0 && <StyledItem>검색결과가 없습니다.</StyledItem>}
         {data.result.map(({ sickNm }, index) => (
           <StyledSickItem key={index}>{sickNm}</StyledSickItem>
         ))}
-      </StyledSickList>
+      </StyledList>
     </StyledResult>
   );
 }
@@ -24,7 +27,7 @@ const StyledResult = styled.div`
   border-top: none;
 `;
 
-const StyledSickList = styled.ul`
+const StyledList = styled.ul`
   padding: 0;
   margin: 0;
   list-style: none;
@@ -32,8 +35,11 @@ const StyledSickList = styled.ul`
   flex-direction: column;
 `;
 
-const StyledSickItem = styled.li`
+const StyledItem = styled.li`
   padding: 15px;
+`;
+
+const StyledSickItem = styled(StyledItem)`
   cursor: pointer;
   &:hover {
     background-color: ${(props) => props.theme.focused};

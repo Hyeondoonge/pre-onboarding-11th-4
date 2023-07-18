@@ -41,6 +41,7 @@ const StyledTextField = styled.div<{ isFocused: boolean }>`
   font-size: 1.25rem;
 
   input {
+    color: ${(props) => props.theme.main};
     font-size: inherit;
     background-color: transparent;
     border: none;
