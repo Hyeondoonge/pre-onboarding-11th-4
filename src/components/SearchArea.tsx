@@ -21,6 +21,10 @@ export default function SearchArea({
     setKeyword(value);
   };
 
+  const clickDeleteButtonHandler = () => {
+    setKeyword('');
+  };
+
   return (
     <StyledSearchArea>
       <StyledTextField
@@ -29,7 +33,7 @@ export default function SearchArea({
         onChange={changeInputHandler}
       >
         <input type='text' value={keyword} placeholder='질환명을 입력해주세요' />
-        <IconButton type='button'>
+        <IconButton type='button' onClick={clickDeleteButtonHandler}>
           <RiDeleteBack2Line />
         </IconButton>
         <IconButton type='button'>
