@@ -6,9 +6,11 @@ declare module 'styled-components' {
     secondary: string;
     placeholder: string;
     background: string;
+    textBackground: string;
     icons: string;
     border: string;
     focused: string;
     shadow?: string;
+    textBorder: string;
   }
 }

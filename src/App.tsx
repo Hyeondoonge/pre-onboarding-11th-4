@@ -1,4 +1,5 @@
 import CustomThemeProvider from 'contexts/UserThemeProvider';
+import SearchPage from 'pages/SearchPage';
 import GlobalStyle from 'styles/GlobalStyle';
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <>
       <CustomThemeProvider>
         <GlobalStyle />
+        <SearchPage />
       </CustomThemeProvider>
     </>
   );
