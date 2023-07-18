@@ -1,6 +1,21 @@
 import { styled } from 'styled-components';
+import ErrorBoundary from './ErrorBoundary';
+import ResultErrorFallback from './ResultErrorFallback';
 
 export default function Result() {
+  return (
+    <StyledResult>
+      <StyledBorder>
+        <div />
+      </StyledBorder>
+      <ErrorBoundary fallback={<ResultErrorFallback />}>
+        <List />
+      </ErrorBoundary>
+    </StyledResult>
+  );
+}
+
+function List() {
   const data = {
     result: []
   }; // 목데이터
@@ -8,33 +23,16 @@ export default function Result() {
   const RESULT_LENGTH = Math.min(MAX_LENGTH, data.result.length);
 
   return (
-    <StyledResult>
-      <StyledBorder>
-        <div />
-      </StyledBorder>
-      <StyledList>
-        {data.result.length === 0 && <StyledItem>검색결과가 없습니다.</StyledItem>}
-        {data.result
-          .filter((_, index) => index < RESULT_LENGTH)
-          .map(({ sickNm }, index) => (
-            <StyledSickItem key={index}>{sickNm}</StyledSickItem>
-          ))}
-      </StyledList>
-    </StyledResult>
+    <StyledList>
+      {data.result.length === 0 && <StyledItem>검색결과가 없습니다.</StyledItem>}
+      {data.result
+        .filter((_, index) => index < RESULT_LENGTH)
+        .map(({ sickNm }, index) => (
+          <StyledSickItem key={index}>{sickNm}</StyledSickItem>
+        ))}
+    </StyledList>
   );
 }
-
-const StyledBorder = styled.div`
-  display: flex;
-  justify-content: center;
-  div {
-    width: 95%;
-    height: 1px;
-    background-color: ${(props) => props.theme.border};
-    position: absolute;
-    top: 0;
-  }
-`;
 
 const StyledResult = styled.div`
   position: relative;
@@ -65,5 +63,17 @@ const StyledSickItem = styled(StyledItem)`
   cursor: pointer;
   &:hover {
     background-color: ${(props) => props.theme.focused};
+  }
+`;
+
+const StyledBorder = styled.div`
+  display: flex;
+  justify-content: center;
+  div {
+    width: 95%;
+    height: 1px;
+    background-color: ${(props) => props.theme.border};
+    position: absolute;
+    top: 0;
   }
 `;
