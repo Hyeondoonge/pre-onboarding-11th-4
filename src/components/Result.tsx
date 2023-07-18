@@ -4,6 +4,8 @@ export default function Result() {
   const data = {
     result: []
   }; // 목데이터
+  const MAX_LENGTH = 10;
+  const RESULT_LENGTH = Math.min(MAX_LENGTH, data.result.length);
 
   return (
     <StyledResult>
@@ -12,9 +14,11 @@ export default function Result() {
       </StyledBorder>
       <StyledList>
         {data.result.length === 0 && <StyledItem>검색결과가 없습니다.</StyledItem>}
-        {data.result.map(({ sickNm }, index) => (
-          <StyledSickItem key={index}>{sickNm}</StyledSickItem>
-        ))}
+        {data.result
+          .filter((_, index) => index < RESULT_LENGTH)
+          .map(({ sickNm }, index) => (
+            <StyledSickItem key={index}>{sickNm}</StyledSickItem>
+          ))}
       </StyledList>
     </StyledResult>
   );
