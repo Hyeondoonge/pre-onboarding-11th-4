@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import ErrorBoundary from './ErrorBoundary';
 import ResultErrorFallback from './ResultErrorFallback';
+import { useEffect, useState } from 'react';
 
 export default function Result() {
   return (
@@ -16,11 +17,29 @@ export default function Result() {
 }
 
 function List() {
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
   const data = {
     result: []
   }; // 목데이터
   const MAX_LENGTH = 10;
   const RESULT_LENGTH = Math.min(MAX_LENGTH, data.result.length);
+
+  useEffect(() => {
+    const handleKeyup = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowUp') {
+        setSelectedIndex(selectedIndex - 1 <= -1 ? RESULT_LENGTH - 1 : selectedIndex - 1);
+      } else if (event.key === 'ArrowDown') {
+        setSelectedIndex(selectedIndex + 1 === RESULT_LENGTH ? 0 : selectedIndex + 1);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyup);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyup);
+    };
+  }, [selectedIndex, setSelectedIndex, RESULT_LENGTH]);
 
   return (
     <StyledList>
@@ -28,7 +47,15 @@ function List() {
       {data.result
         .filter((_, index) => index < RESULT_LENGTH)
         .map(({ sickNm }, index) => (
-          <StyledSickItem key={index}>{sickNm}</StyledSickItem>
+          <StyledSickItem
+            key={index}
+            isSelected={selectedIndex === index}
+            onMouseOver={() => {
+              setSelectedIndex(index);
+            }}
+          >
+            {sickNm}
+          </StyledSickItem>
         ))}
     </StyledList>
   );
@@ -59,11 +86,9 @@ const StyledItem = styled.li`
   padding: 15px;
 `;
 
-const StyledSickItem = styled(StyledItem)`
+const StyledSickItem = styled(StyledItem)<{ isSelected: boolean }>`
   cursor: pointer;
-  &:hover {
-    background-color: ${(props) => props.theme.focused};
-  }
+  background-color: ${(props) => (props.isSelected ? props.theme.focused : 'none')};
 `;
 
 const StyledBorder = styled.div`
