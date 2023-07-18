@@ -17,5 +17,5 @@ const StyledResultErrorFallback = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  color: ${(props) => props.theme.secondary};
+  color: ${(props) => props.theme.main};
 `;
