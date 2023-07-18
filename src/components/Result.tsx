@@ -49,6 +49,10 @@ function List({ keyword }: ListProps) {
     };
   }, [selectedIndex, setSelectedIndex, RESULT_LENGTH]);
 
+  const handleMouseOver = (index: number) => {
+    setSelectedIndex(index);
+  };
+
   return (
     <StyledList>
       {keyword === '' && <StyledItem>최근검색어가 없습니다.</StyledItem>}
@@ -56,17 +60,37 @@ function List({ keyword }: ListProps) {
       {data.result
         .filter((_, index) => index < RESULT_LENGTH)
         .map(({ sickNm }, index) => (
-          <StyledSickItem
+          <SickItem
             key={index}
+            keyword={keyword}
             isSelected={selectedIndex === index}
-            onMouseOver={() => {
-              setSelectedIndex(index);
-            }}
-          >
-            {sickNm}
-          </StyledSickItem>
+            handleMouseOver={() => handleMouseOver(index)}
+            name={sickNm}
+          />
         ))}
     </StyledList>
+  );
+}
+
+interface SickItemProps {
+  keyword: string;
+  isSelected: boolean;
+  handleMouseOver: () => void;
+  name: string;
+}
+
+function SickItem({ keyword, isSelected, handleMouseOver, name }: SickItemProps) {
+  const splited = name.split(keyword);
+
+  return (
+    <StyledSickItem isSelected={isSelected} onMouseOver={handleMouseOver}>
+      {splited.map((value, index) => (
+        <span>
+          {value}
+          {index !== splited.length - 1 && <span className='highlight'>{keyword}</span>}
+        </span>
+      ))}
+    </StyledSickItem>
   );
 }
 
@@ -98,6 +122,10 @@ const StyledItem = styled.li`
 const StyledSickItem = styled(StyledItem)<{ isSelected: boolean }>`
   cursor: pointer;
   background-color: ${(props) => (props.isSelected ? props.theme.focused : 'none')};
+
+  .highlight {
+    font-weight: 700;
+  }
 `;
 
 const StyledBorder = styled.div`
