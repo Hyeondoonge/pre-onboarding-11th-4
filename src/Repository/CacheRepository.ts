@@ -1,4 +1,5 @@
 import { getResult } from 'apis/search';
+import { AxiosError } from 'axios';
 import { TResult, TCachedResult } from 'types/common';
 import { isCachedResult, isValidateExpiredTime } from 'utils/cache';
 
@@ -34,22 +35,31 @@ class CacheRepository implements CacheRepositoryInterface {
 
       return parsedItem;
     } catch (error) {
-      // TODO: 에러 핸들링
-      console.log('error');
-      throw error;
+      if (error instanceof AxiosError) {
+        if (!error.response) {
+          throw new Error('요청을 정상적으로 처리할 수 없습니다. 서버가 작동하는지 확인하세요.');
+        } else {
+          throw new Error('요청 중 오류가 발생했습니다. 요청 URL을 확인하세요.');
+        }
+      } else {
+        throw new Error('AxiosError 이외의 알 수 없는 오류가 발생했습니다');
+      }
     }
   }
 
   save(keyword: string, result: TResult) {
-    const SECOND = 1000;
-    const MINUTE = SECOND * 60;
-    const HOUR = MINUTE * 60;
-    const expired_time = Date.now() + HOUR;
+    try {
+      const SECOND = 1000;
+      const MINUTE = SECOND * 60;
+      const HOUR = MINUTE * 60;
+      const expired_time = Date.now() + HOUR;
 
-    const cachedResult: TCachedResult = { result, expired_time };
-    this.#storage.setItem(keyword, JSON.stringify(cachedResult));
-
-    return cachedResult;
+      const cachedResult: TCachedResult = { result, expired_time };
+      this.#storage.setItem(keyword, JSON.stringify(cachedResult));
+      return cachedResult;
+    } catch (error) {
+      throw new Error('알 수 없는 오류가 발생했습니다. 캐시 저장 기능을 확인하세요.');
+    }
   }
 }
 
