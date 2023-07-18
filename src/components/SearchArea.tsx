@@ -57,4 +57,6 @@ const StyledTextField = styled.div<{ isFocused: boolean }>`
   border-bottom: ${(props) => (props.isFocused ? 'none' : props.theme.textBorder)};
 `;
 
-const StyledSearchArea = styled.div``;
+const StyledSearchArea = styled.div`
+  width: 100%;
+`;

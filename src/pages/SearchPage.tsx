@@ -14,13 +14,17 @@ export default function SearchPage() {
 
   return (
     <StyledSearchPage>
-      <h2>국내 모든 임상시험 검색하고 온라인으로 참여하기</h2>
-      <SearchArea isFocused={isFocused} updateFocused={updateFocused} />
-      {isFocused && (
-        <ErrorBoundary fallback={<ResultErrorFallback />}>
-          <Result />
-        </ErrorBoundary>
-      )}
+      <div>
+        <h2>국내 모든 임상시험 검색하고 온라인으로 참여하기</h2>
+      </div>
+      <div>
+        <SearchArea isFocused={isFocused} updateFocused={updateFocused} />
+        {isFocused && (
+          <ErrorBoundary fallback={<ResultErrorFallback />}>
+            <Result />
+          </ErrorBoundary>
+        )}
+      </div>
     </StyledSearchPage>
   );
 }
@@ -29,9 +33,17 @@ const StyledSearchPage = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
   font-size: 1.25rem;
+  gap: 20px;
 
-  h2 {
+  & > div:nth-child(1) {
+    width: 65%;
+    text-align: center;
     color: ${(props) => props.theme.main};
+  }
+
+  & > div:nth-child(2) {
+    width: 100%;
   }
 `;

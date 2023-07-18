@@ -18,6 +18,8 @@ export default function Result() {
 }
 
 const StyledResult = styled.div`
+  width: 100%;
+
   background-color: ${(props) => props.theme.textBackground};
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
