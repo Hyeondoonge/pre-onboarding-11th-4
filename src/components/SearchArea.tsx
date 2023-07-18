@@ -1,17 +1,34 @@
 import { styled } from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
 import { RiDeleteBack2Line } from 'react-icons/ri';
+import { ChangeEvent } from 'react';
 
 interface SearchAreaProps {
   isFocused: boolean;
-  updateFocused: (isFocused: boolean) => void;
+  setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
+  keyword: string;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function SearchArea({ isFocused, updateFocused }: SearchAreaProps) {
+export default function SearchArea({
+  isFocused,
+  setIsFocused,
+  keyword,
+  setKeyword
+}: SearchAreaProps) {
+  const changeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setKeyword(value);
+  };
+
   return (
     <StyledSearchArea>
-      <StyledTextField isFocused={isFocused} onFocus={() => updateFocused(true)}>
-        <input type='text' placeholder='질환명을 입력해주세요' />
+      <StyledTextField
+        isFocused={isFocused}
+        onFocus={() => setIsFocused(true)}
+        onChange={changeInputHandler}
+      >
+        <input type='text' value={keyword} placeholder='질환명을 입력해주세요' />
         <IconButton type='button'>
           <RiDeleteBack2Line />
         </IconButton>
