@@ -12,7 +12,7 @@ const instance = axios.create({
 
 export const getResult = async (keyword: string): Promise<TResult> => {
   try {
-    const res = await instance.get(`/sick?q=${keyword}`);
+    const res = await instance.get(`/sick?q=${encodeURIComponent(keyword)}`);
     return res.data;
   } catch (error) {
     throw error;
