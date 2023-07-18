@@ -7,6 +7,9 @@ export default function Result() {
 
   return (
     <StyledResult>
+      <StyledBorder>
+        <div />
+      </StyledBorder>
       <StyledList>
         {data.result.length === 0 && <StyledItem>검색결과가 없습니다.</StyledItem>}
         {data.result.map(({ sickNm }, index) => (
@@ -17,7 +20,20 @@ export default function Result() {
   );
 }
 
+const StyledBorder = styled.div`
+  display: flex;
+  justify-content: center;
+  div {
+    width: 95%;
+    height: 1px;
+    background-color: ${(props) => props.theme.border};
+    position: absolute;
+    top: 0;
+  }
+`;
+
 const StyledResult = styled.div`
+  position: relative;
   width: 100%;
 
   background-color: ${(props) => props.theme.textBackground};
