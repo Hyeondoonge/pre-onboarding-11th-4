@@ -2,12 +2,23 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Result from 'components/Result';
 import ResultErrorFallback from 'components/ResultErrorFallback';
 import SearchArea from 'components/SearchArea';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 export default function SearchPage() {
   const [isFocused, setIsFocused] = useState(false);
   const [keyword, setKeyword] = useState('');
+
+  useEffect(() => {
+    const handleWindowClick = () => {
+      setIsFocused(false);
+    };
+
+    window.addEventListener('click', handleWindowClick);
+    return () => {
+      window.removeEventListener('click', handleWindowClick);
+    };
+  }, []);
 
   return (
     <StyledSearchPage>

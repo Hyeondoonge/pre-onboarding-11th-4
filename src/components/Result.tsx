@@ -12,7 +12,11 @@ interface ListProps {
 
 export default function Result({ keyword }: ResultProps) {
   return (
-    <StyledResult>
+    <StyledResult
+      onClick={(event) => {
+        event.stopPropagation();
+      }}
+    >
       <StyledBorder>
         <div />
       </StyledBorder>

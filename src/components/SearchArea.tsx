@@ -26,7 +26,11 @@ export default function SearchArea({
   };
 
   return (
-    <StyledSearchArea>
+    <StyledSearchArea
+      onClick={(event) => {
+        event.stopPropagation();
+      }}
+    >
       <StyledTextField
         isFocused={isFocused}
         onFocus={() => setIsFocused(true)}
