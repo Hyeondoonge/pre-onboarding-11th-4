@@ -8,13 +8,9 @@ interface SearchAreaProps {
 }
 
 export default function SearchArea({ isFocused, updateFocused }: SearchAreaProps) {
-  const styleTextField = {
-    borderRadius: isFocused ? '20px 20px 0px 0px' : '20px'
-  };
-
   return (
     <StyledSearchArea>
-      <StyledTextField style={styleTextField} onFocus={() => updateFocused(true)}>
+      <StyledTextField isFocused={isFocused} onFocus={() => updateFocused(true)}>
         <input type='text' placeholder='질환명을 입력해주세요' />
         <IconButton type='button'>
           <RiDeleteBack2Line />
@@ -35,12 +31,12 @@ const IconButton = styled.button`
   cursor: pointer;
 `;
 
-const StyledTextField = styled.div`
+const StyledTextField = styled.div<{ isFocused: boolean }>`
+  background-color: ${(props) => props.theme.textBackground};
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  background-color: ${(props) => props.theme.focused};
   padding: 15px;
   font-size: 1.25rem;
 
@@ -54,6 +50,10 @@ const StyledTextField = styled.div`
     outline: none;
     border: none;
   }
+
+  border-radius: ${(props) => (props.isFocused ? '20px 20px 0px 0px' : '20px')};
+  border: ${(props) => props.theme.textBorder};
+  border-bottom: ${(props) => (props.isFocused ? 'none' : props.theme.textBorder)};
 `;
 
 const StyledSearchArea = styled.div``;

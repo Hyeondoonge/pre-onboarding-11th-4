@@ -30,4 +30,8 @@ const StyledSearchPage = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.25rem;
+
+  h2 {
+    color: ${(props) => props.theme.main};
+  }
 `;
