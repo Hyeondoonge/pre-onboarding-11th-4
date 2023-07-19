@@ -63,13 +63,22 @@ function List({ keyword, setKeyword }: ListProps) {
   const MAX_LENGTH = 10;
   const RESULT_LENGTH = Math.min(MAX_LENGTH, data.length);
 
+  console.log(selectedIndex);
+
+  const updateFocusedItem = (index: number) => {
+    if (!data[index]) return;
+    setSelectedIndex(index);
+    // TODO: data[index] undefined 오류
+    setKeyword(data[index]?.sickNm ?? '');
+  };
+
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
       if (event.isComposing) return;
       if (event.key === 'ArrowUp') {
-        setSelectedIndex(selectedIndex - 1 <= -1 ? RESULT_LENGTH - 1 : selectedIndex - 1);
+        updateFocusedItem(selectedIndex - 1 <= -1 ? RESULT_LENGTH - 1 : selectedIndex - 1);
       } else if (event.key === 'ArrowDown') {
-        setSelectedIndex(selectedIndex + 1 === RESULT_LENGTH ? 0 : selectedIndex + 1);
+        updateFocusedItem(selectedIndex + 1 === RESULT_LENGTH ? 0 : selectedIndex + 1);
       }
     };
 
@@ -92,6 +101,7 @@ function List({ keyword, setKeyword }: ListProps) {
             keyword={keyword}
             isSelected={selectedIndex === index}
             name={sickNm}
+            handleMouseOver={() => updateFocusedItem(index)}
           />
         ))}
     </StyledList>
@@ -101,15 +111,15 @@ function List({ keyword, setKeyword }: ListProps) {
 interface SickItemProps {
   keyword: string;
   isSelected: boolean;
-  // handleMouseOver: () => void;
+  handleMouseOver: () => void;
   name: string;
 }
 
-function SickItem({ keyword, isSelected, name }: SickItemProps) {
+function SickItem({ keyword, isSelected, name, handleMouseOver }: SickItemProps) {
   const splited = name.split(keyword);
 
   return (
-    <StyledSickItem $isSelected={isSelected}>
+    <StyledSickItem $isSelected={isSelected} onMouseOver={handleMouseOver}>
       {splited.map((value, index) => (
         <span key={index}>
           {value}
