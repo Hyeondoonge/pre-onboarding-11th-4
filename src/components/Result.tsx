@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { styled } from 'styled-components';
 import ErrorBoundary from './ErrorBoundary';
 import ResultErrorFallback from './ResultErrorFallback';
@@ -32,24 +33,43 @@ export default function Result({ keyword, setKeyword }: ResultProps) {
 
 function List({ keyword, setKeyword }: ListProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [data, setData] = useState<TResult>([]); // 목데이터
 
-  const data: TResult = []; // 목데이터
+  useEffect(() => {
+    setData([
+      {
+        sickCd: 'C23',
+        sickNm: '담낭의 악성 신생물'
+      },
+      {
+        sickCd: 'K81',
+        sickNm: '담낭염'
+      },
+      {
+        sickCd: 'K82',
+        sickNm: '담낭의 기타 질환'
+      },
+      {
+        sickCd: 'K87',
+        sickNm: '달리 분류된 질환에서의 담낭, 담도 및 췌장의 장애'
+      },
+      {
+        sickCd: 'Q44',
+        sickNm: '담낭, 담관 및 간의 선천기형'
+      }
+    ]);
+  }, []);
 
   const MAX_LENGTH = 10;
   const RESULT_LENGTH = Math.min(MAX_LENGTH, data.length);
 
-  const updateFocusedItem = (index: number) => {
-    if (index <= -1 || RESULT_LENGTH <= index) return;
-    setKeyword(data[index]?.sickNm ?? '');
-    setSelectedIndex(index);
-  };
-
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
+      if (event.isComposing) return;
       if (event.key === 'ArrowUp') {
-        updateFocusedItem(selectedIndex - 1 <= -1 ? RESULT_LENGTH - 1 : selectedIndex - 1);
+        setSelectedIndex(selectedIndex - 1 <= -1 ? RESULT_LENGTH - 1 : selectedIndex - 1);
       } else if (event.key === 'ArrowDown') {
-        updateFocusedItem(selectedIndex + 1 === RESULT_LENGTH ? 0 : selectedIndex + 1);
+        setSelectedIndex(selectedIndex + 1 === RESULT_LENGTH ? 0 : selectedIndex + 1);
       }
     };
 
@@ -58,11 +78,7 @@ function List({ keyword, setKeyword }: ListProps) {
     return () => {
       window.removeEventListener('keydown', handleKeydown);
     };
-  }, [selectedIndex, updateFocusedItem, RESULT_LENGTH]);
-
-  const handleMouseOver = (index: number) => {
-    updateFocusedItem(index);
-  };
+  }, [selectedIndex, RESULT_LENGTH]);
 
   return (
     <StyledList>
@@ -75,7 +91,6 @@ function List({ keyword, setKeyword }: ListProps) {
             key={index}
             keyword={keyword}
             isSelected={selectedIndex === index}
-            handleMouseOver={() => handleMouseOver(index)}
             name={sickNm}
           />
         ))}
@@ -86,15 +101,15 @@ function List({ keyword, setKeyword }: ListProps) {
 interface SickItemProps {
   keyword: string;
   isSelected: boolean;
-  handleMouseOver: () => void;
+  // handleMouseOver: () => void;
   name: string;
 }
 
-function SickItem({ keyword, isSelected, handleMouseOver, name }: SickItemProps) {
+function SickItem({ keyword, isSelected, name }: SickItemProps) {
   const splited = name.split(keyword);
 
   return (
-    <StyledSickItem $isSelected={isSelected} onMouseOver={handleMouseOver}>
+    <StyledSickItem $isSelected={isSelected}>
       {splited.map((value, index) => (
         <span key={index}>
           {value}
