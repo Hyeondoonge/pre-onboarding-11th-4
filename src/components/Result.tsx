@@ -34,6 +34,7 @@ function List({ keyword }: ListProps) {
   const data = {
     result: []
   }; // 목데이터
+
   const MAX_LENGTH = 10;
   const RESULT_LENGTH = Math.min(MAX_LENGTH, data.result.length);
 
@@ -89,7 +90,7 @@ function SickItem({ keyword, isSelected, handleMouseOver, name }: SickItemProps)
   return (
     <StyledSickItem $isSelected={isSelected} onMouseOver={handleMouseOver}>
       {splited.map((value, index) => (
-        <span>
+        <span key={index}>
           {value}
           {index !== splited.length - 1 && <span className='highlight'>{keyword}</span>}
         </span>
