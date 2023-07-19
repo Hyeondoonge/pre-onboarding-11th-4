@@ -37,6 +37,11 @@ export default function SearchArea({
           value={keyword}
           placeholder='질환명을 입력해주세요'
           onChange={changeInputHandler}
+          onKeyDown={(event) => {
+            if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+              event.preventDefault();
+            }
+          }}
         />
         {keyword !== '' && (
           <IconButton type='button' onClick={clickDeleteButtonHandler}>

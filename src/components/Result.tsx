@@ -2,15 +2,18 @@ import { styled } from 'styled-components';
 import ErrorBoundary from './ErrorBoundary';
 import ResultErrorFallback from './ResultErrorFallback';
 import { useEffect, useState } from 'react';
+import { TResult } from 'types/common';
 
 interface ResultProps {
   keyword: string;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
 interface ListProps {
   keyword: string;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function Result({ keyword }: ResultProps) {
+export default function Result({ keyword, setKeyword }: ResultProps) {
   return (
     <StyledResult
       onClick={(event) => {
@@ -21,28 +24,32 @@ export default function Result({ keyword }: ResultProps) {
         <div />
       </StyledBorder>
       <ErrorBoundary fallback={<ResultErrorFallback />}>
-        <List keyword={keyword} />
+        <List keyword={keyword} setKeyword={setKeyword} />
       </ErrorBoundary>
     </StyledResult>
   );
 }
 
-function List({ keyword }: ListProps) {
+function List({ keyword, setKeyword }: ListProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  const data = {
-    result: []
-  }; // 목데이터
+  const data: TResult = []; // 목데이터
 
   const MAX_LENGTH = 10;
-  const RESULT_LENGTH = Math.min(MAX_LENGTH, data.result.length);
+  const RESULT_LENGTH = Math.min(MAX_LENGTH, data.length);
+
+  const updateFocusedItem = (index: number) => {
+    if (index <= -1 || RESULT_LENGTH <= index) return;
+    setKeyword(data[index]?.sickNm ?? '');
+    setSelectedIndex(index);
+  };
 
   useEffect(() => {
     const handleKeyup = (event: KeyboardEvent) => {
       if (event.key === 'ArrowUp') {
-        setSelectedIndex(selectedIndex - 1 <= -1 ? RESULT_LENGTH - 1 : selectedIndex - 1);
+        updateFocusedItem(selectedIndex - 1 <= -1 ? RESULT_LENGTH - 1 : selectedIndex - 1);
       } else if (event.key === 'ArrowDown') {
-        setSelectedIndex(selectedIndex + 1 === RESULT_LENGTH ? 0 : selectedIndex + 1);
+        updateFocusedItem(selectedIndex + 1 === RESULT_LENGTH ? 0 : selectedIndex + 1);
       }
     };
 
@@ -51,17 +58,17 @@ function List({ keyword }: ListProps) {
     return () => {
       window.removeEventListener('keydown', handleKeyup);
     };
-  }, [selectedIndex, setSelectedIndex, RESULT_LENGTH]);
+  }, [selectedIndex, updateFocusedItem, RESULT_LENGTH]);
 
   const handleMouseOver = (index: number) => {
-    setSelectedIndex(index);
+    updateFocusedItem(index);
   };
 
   return (
     <StyledList>
       {keyword === '' && <StyledItem>최근검색어가 없습니다.</StyledItem>}
       {keyword !== '' && RESULT_LENGTH === 0 && <StyledItem>검색결과가 없습니다.</StyledItem>}
-      {data.result
+      {data
         .filter((_, index) => index < RESULT_LENGTH)
         .map(({ sickNm }, index) => (
           <SickItem
