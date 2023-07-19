@@ -114,15 +114,18 @@ interface SickItemProps {
 
 function SickItem({ keyword, isSelected, name, handleMouseOver }: SickItemProps) {
   const splited = name.split(keyword);
+  const HYPER_LINK = `https://clinicaltrialskorea.com/studies?conditions=${encodeURI(name)}`;
 
   return (
     <StyledSickItem $isSelected={isSelected} onMouseOver={handleMouseOver}>
-      {splited.map((value, index) => (
-        <span key={index}>
-          {value}
-          {index !== splited.length - 1 && <span className='highlight'>{keyword}</span>}
-        </span>
-      ))}
+      <a href={HYPER_LINK}>
+        {splited.map((value, index) => (
+          <span key={index}>
+            {value}
+            {index !== splited.length - 1 && <span className='highlight'>{keyword}</span>}
+          </span>
+        ))}
+      </a>
     </StyledSickItem>
   );
 }
@@ -155,9 +158,14 @@ const StyledItem = styled.li`
 const StyledSickItem = styled(StyledItem)<{ $isSelected: boolean }>`
   cursor: pointer;
   background-color: ${(props) => (props.$isSelected ? props.theme.focused : 'none')};
-  color: ${(props) => props.theme.main};
+
   .highlight {
     color: ${(props) => props.theme.highlight};
+  }
+
+  a {
+    color: ${(props) => props.theme.main};
+    text-decoration: none;
   }
 `;
 
