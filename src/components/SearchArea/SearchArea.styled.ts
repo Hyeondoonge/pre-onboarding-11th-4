@@ -8,7 +8,7 @@ export const IconButton = styled.button`
   cursor: pointer;
 `;
 
-export const TextField = styled.div<{ $isFocused: boolean }>`
+export const TextField = styled.div<{ $isFloating: boolean }>`
   background-color: ${(props) => props.theme.textBackground};
   display: flex;
   justify-content: space-between;
@@ -29,9 +29,9 @@ export const TextField = styled.div<{ $isFocused: boolean }>`
     border: none;
   }
 
-  border-radius: ${(props) => (props.$isFocused ? '20px 20px 0px 0px' : '20px')};
+  border-radius: ${(props) => (props.$isFloating ? '20px 20px 0px 0px' : '20px')};
   border: ${(props) => props.theme.textBorder};
-  border-bottom: ${(props) => (props.$isFocused ? 'none' : props.theme.textBorder)};
+  border-bottom: ${(props) => (props.$isFloating ? 'none' : props.theme.textBorder)};
 `;
 
 export const SearchArea = styled.div`

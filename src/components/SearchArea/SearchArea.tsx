@@ -36,7 +36,7 @@ export default function SearchArea({
 
   return (
     <Styled.SearchArea>
-      <Styled.TextField $isFocused={isFloating} onFocus={() => setIsFloating(true)}>
+      <Styled.TextField $isFloating={isFloating} onFocus={() => setIsFloating(true)}>
         <input
           type='text'
           value={keyword}
