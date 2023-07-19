@@ -8,20 +8,20 @@
 
 ## 목차
 
-### [⛳️ 시작 방법](https://github.com/Hyeondoonge/pre-onboarding-11th-4/#시작-방법)
+### [⛳️ 시작 방법](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EF%B8%8F-%EC%8B%9C%EC%9E%91-%EB%B0%A9%EB%B2%95-1)
 
-### [⚒️ 기술 스택](https://github.com/Hyeondoonge/pre-onboarding-11th-4/#기술-스택)
+### [⚒️ 기술 스택](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EF%B8%8F-%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D-1)
 
-### [✨ 주요 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4/#주요-기능)
+### [✨ 주요 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-1)
 
-- [필수 기능]()
-- [개인 추가 기능]()
+- [필수 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%ED%95%84%EC%88%98-%EA%B8%B0%EB%8A%A5)
+- [개인 추가 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EA%B0%9C%EC%9D%B8-%EC%84%A0%ED%83%9D-%EA%B8%B0%EB%8A%A5)
 
-### [？ 고민했던 부분](https://github.com/Hyeondoonge/pre-onboarding-11th-4/#고민했던-부분)
+### [？ 고민했던 부분](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-%EA%B3%A0%EB%AF%BC%ED%96%88%EB%8D%98-%EB%B6%80%EB%B6%84-1)
 
-- [API 호출별로 로컬 캐싱 구현]()
-- [입력마다 API 호출하지 않도록 API 호출 횟수를 줄이는 전략 수립 및 실행]()
-- [키보드만으로 추천 검색어들로 이동 가능]()
+- [API 호출별로 로컬 캐싱 구현](https://github.com/Hyeondoonge/pre-onboarding-11th-4#api-%ED%98%B8%EC%B6%9C%EB%B3%84%EB%A1%9C-%EB%A1%9C%EC%BB%AC-%EC%BA%90%EC%8B%B1-%EA%B5%AC%ED%98%84---cacherepository)
+- [입력마다 API 호출하지 않도록 API 호출 횟수를 줄이는 전략 수립 및 실행](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EC%9E%85%EB%A0%A5%EB%A7%88%EB%8B%A4-api-%ED%98%B8%EC%B6%9C%ED%95%98%EC%A7%80-%EC%95%8A%EB%8F%84%EB%A1%9D-api-%ED%98%B8%EC%B6%9C-%ED%9A%9F%EC%88%98%EB%A5%BC-%EC%A4%84%EC%9D%B4%EB%8A%94-%EC%A0%84%EB%9E%B5-%EC%88%98%EB%A6%BD-%EB%B0%8F-%EC%8B%A4%ED%96%89---usedebounce)
+- [키보드만으로 추천 검색어들로 이동 가능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%ED%82%A4%EB%B3%B4%EB%93%9C%EB%A7%8C%EC%9C%BC%EB%A1%9C-%EC%B6%94%EC%B2%9C-%EA%B2%80%EC%83%89%EC%96%B4%EB%93%A4%EB%A1%9C-%EC%9D%B4%EB%8F%99-%EA%B0%80%EB%8A%A5---result)
 
 ## ⛳️ 시작 방법
 
@@ -72,7 +72,7 @@ $ npm build
 - debounce를 사용해 UX 개선 및 불필요한 통신 비용 발생 문제 개선
 - 위, 아래 방향키 입력 시 검색어를 탐색할 수 있는 기능 구현
 
-### 개인 선택 기능
+### 개인 추가 기능
 
 - ErrorBoundary를 적용해 검색 API 요청 중 에러 발생 시 전체 UI가 깨지지 않도록 에러 핸들링
   - API 주소가 바르지 않거나, API 서버가 작동하지 않는 등의 상황에서 확인가능합니다
@@ -88,14 +88,14 @@ $ npm build
 
 ### API 호출별로 로컬 캐싱 구현 ([< > CacheRepository](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/src/repositories/CacheRepository.ts))
 
-1. 캐싱된 데이터를 관리할 저장소를 구현하기 위한 도구: object vs ☑️ class
+**1. 캐싱된 데이터를 관리할 저장소를 구현하기 위한 도구: object vs ☑️ class**
 
 object는 구현하기 쉽다는 장점이 있지만, 다른 모듈에서 쉽게 수정할 수 있어 그에 따라 데이터 변경이 어디서 일어나는지 파악이 어렵다는 단점이 있습니다.
 class로 구현하면 object 보다는 코드를 더 작성해야되지만, private 하게 데이터를 관리할 수 있는 기능을 지원합니다.
 
 따라서 데이터를 프라이빗하게 관리할 수 있는 장점을 가진 class를 선택했습니다.
 
-2. 데이터 저장 위치: 앱 vs ☑️ local storage
+**2. 데이터 저장 위치: 앱 vs ☑️ local storage**
 
 여러 경우의 수에 대해 고민했습니다. 앱에 저장하는 것은 외부 요소의 영향을 받지 않아 예측가능합니다. 하지만 서비스를 끄게되면 데이터도 소멸됩니다.
 
@@ -103,7 +103,7 @@ Local storage에 저장할 경우 서비스를 나갔다와도 캐싱 데이터�
 
 외부 요소인 local storage의 기능이 변화한다고해도 영향을 받는 코드를 최소화하고 코드를 조금 더 작성해서 안정성을 보장함으로서, 서비스를 껐다 켜도 데이터를 유지하여 좋은 UX를 제공하기위해 local storage를 선택했습니다.
 
-3. 무결성 보장
+**3. 무결성 보장**
 
 직접 접근해서 수정하는 경우가 있을 수 있습니다. 이를 대비해 데이터의 형식을 확인하여 옳은 값을 가져오도록 했습니다.
 크게 Null 인지, 데이터 형식이 옳은지, 유효기간이 지나지 않았는지를 검사하도록 구현했습니다.
