@@ -1,10 +1,10 @@
 import { getResult } from 'apis/search';
 import { AxiosError } from 'axios';
-import { TResult, TCachedResult } from 'types/common';
+import { TResult, TCachedResult, TResultResponse } from 'types/common';
 import { isCachedResult, isValidateExpiredTime } from 'utils/cache';
 
 interface CacheRepositoryInterface {
-  get: (keyword: string) => Promise<TCachedResult>;
+  get: (keyword: string) => Promise<TResultResponse>;
   save: (keyword: string, result: TResult) => TCachedResult;
 }
 
@@ -22,7 +22,7 @@ class CacheRepository implements CacheRepositoryInterface {
       if (!item) {
         const res = await getResult(keyword);
         const cachedResult = this.save(keyword, res);
-        return cachedResult;
+        return { data: cachedResult.result, error: undefined };
       }
 
       const parsedItem = JSON.parse(item);
@@ -30,19 +30,28 @@ class CacheRepository implements CacheRepositoryInterface {
       if (!isCachedResult(parsedItem) || !isValidateExpiredTime(parsedItem.expired_time)) {
         const res = await getResult(keyword);
         const cachedResult = this.save(keyword, res);
-        return cachedResult;
+        return { data: cachedResult.result, error: undefined };
       }
 
-      return parsedItem;
+      return { data: parsedItem.result, error: undefined };
     } catch (error) {
       if (error instanceof AxiosError) {
         if (!error.response) {
-          throw new Error('요청을 정상적으로 처리할 수 없습니다. 서버가 작동하는지 확인하세요.');
+          // throw new Error('요청을 정상적으로 처리할 수 없습니다. 서버가 작동하는지 확인하세요.');
+          return {
+            data: [],
+            error: new Error('요청을 정상적으로 처리할 수 없습니다. 서버가 작동하는지 확인하세요.')
+          };
         } else {
-          throw new Error('요청 중 오류가 발생했습니다. 요청 URL을 확인하세요.');
+          return {
+            data: [],
+            error: new Error('요청 중 오류가 발생했습니다. 요청 URL을 확인하세요.')
+          };
+          // throw new Error('요청 중 오류가 발생했습니다. 요청 URL을 확인하세요.');
         }
       } else {
-        throw new Error('AxiosError 이외의 알 수 없는 오류가 발생했습니다');
+        return { data: [], error: new Error('AxiosError 이외의 알 수 없는 오류가 발생했습니다') };
+        // throw new Error('AxiosError 이외의 알 수 없는 오류가 발생했습니다');
       }
     }
   }

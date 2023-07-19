@@ -3,7 +3,8 @@ import { styled } from 'styled-components';
 import ErrorBoundary from './ErrorBoundary';
 import ResultErrorFallback from './ResultErrorFallback';
 import { useEffect, useState } from 'react';
-import { TResult } from 'types/common';
+import { TResultResponse } from 'types/common';
+import { cacheRepository } from 'Repository/CacheRepository';
 
 interface ResultProps {
   keyword: string;
@@ -33,37 +34,11 @@ export default function Result({ keyword, setKeyword }: ResultProps) {
 
 function List({ keyword, setKeyword }: ListProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
-  const [data, setData] = useState<TResult>([]); // 목데이터
-
-  useEffect(() => {
-    setData([
-      {
-        sickCd: 'C23',
-        sickNm: '담낭의 악성 신생물'
-      },
-      {
-        sickCd: 'K81',
-        sickNm: '담낭염'
-      },
-      {
-        sickCd: 'K82',
-        sickNm: '담낭의 기타 질환'
-      },
-      {
-        sickCd: 'K87',
-        sickNm: '달리 분류된 질환에서의 담낭, 담도 및 췌장의 장애'
-      },
-      {
-        sickCd: 'Q44',
-        sickNm: '담낭, 담관 및 간의 선천기형'
-      }
-    ]);
-  }, []);
+  const [searchResult, setSearchResult] = useState<TResultResponse>({ data: [], error: undefined });
+  const { data, error } = searchResult;
 
   const MAX_LENGTH = 10;
   const RESULT_LENGTH = Math.min(MAX_LENGTH, data.length);
-
-  console.log(selectedIndex);
 
   const updateFocusedItem = (index: number) => {
     if (!data[index]) return;
@@ -88,6 +63,21 @@ function List({ keyword, setKeyword }: ListProps) {
       window.removeEventListener('keydown', handleKeydown);
     };
   }, [selectedIndex, RESULT_LENGTH]);
+
+  useEffect(() => {
+    if (keyword === '') {
+      setSearchResult({ data: [], error: undefined });
+      return;
+    }
+    const fetchResult = async () => {
+      const res = await cacheRepository.get(keyword);
+      setSearchResult(res);
+    };
+
+    fetchResult();
+  }, [keyword]);
+
+  if (error) throw error;
 
   return (
     <StyledList>
