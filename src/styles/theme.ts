@@ -9,7 +9,10 @@ export const Dark: DefaultTheme = {
   icons: '#C6C6C6',
   border: '#A1A1A1',
   focused: '#333333',
-  textBorder: '1px solid #A1A1A1'
+  textBorder: '1px solid #A1A1A1',
+  highlight: '#95B2FD',
+  modeColor: '#ffe207',
+  modeBackground: '#252525'
 };
 
 export const Light: DefaultTheme = {
@@ -22,5 +25,8 @@ export const Light: DefaultTheme = {
   border: '#C7C7C7',
   focused: '#F1F1F1',
   shadow: '#ABABAB',
-  textBorder: 'none'
+  textBorder: 'none',
+  highlight: '#4B7EFF',
+  modeColor: '#f49d06',
+  modeBackground: '#a1c3e1'
 };

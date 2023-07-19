@@ -12,5 +12,8 @@ declare module 'styled-components' {
     focused: string;
     shadow?: string;
     textBorder: string;
+    highlight: string;
+    modeColor: string;
+    modeBackground: string;
   }
 }

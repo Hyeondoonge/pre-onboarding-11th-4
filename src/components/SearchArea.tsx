@@ -1,20 +1,62 @@
 import { styled } from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
 import { RiDeleteBack2Line } from 'react-icons/ri';
+import { ChangeEvent, useEffect } from 'react';
+import useDebounce from 'hooks/useDebounce';
+import { useSearchKeywordContext } from 'hooks/useSearchKeywordContext';
 
 interface SearchAreaProps {
   isFocused: boolean;
-  updateFocused: (isFocused: boolean) => void;
+  setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
+  fetchResult: (keyword: string) => void;
+  initResult: () => void;
 }
 
-export default function SearchArea({ isFocused, updateFocused }: SearchAreaProps) {
+export default function SearchArea({
+  isFocused,
+  setIsFocused,
+  fetchResult,
+  initResult
+}: SearchAreaProps) {
+  const { keyword, setKeyword } = useSearchKeywordContext();
+  const debounce = useDebounce();
+
+  const changeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setKeyword(value);
+
+    debounce(() => fetchResult(value), 500);
+  };
+
+  const clickDeleteButtonHandler = () => {
+    setKeyword('');
+    initResult();
+  };
+
   return (
-    <StyledSearchArea>
-      <StyledTextField isFocused={isFocused} onFocus={() => updateFocused(true)}>
-        <input type='text' placeholder='질환명을 입력해주세요' />
-        <IconButton type='button'>
-          <RiDeleteBack2Line />
-        </IconButton>
+    <StyledSearchArea
+      onClick={(event) => {
+        event.stopPropagation();
+      }}
+    >
+      <StyledTextField $isFocused={isFocused} onFocus={() => setIsFocused(true)}>
+        <input
+          type='text'
+          value={keyword}
+          placeholder='질환명을 입력해주세요'
+          onChange={changeInputHandler}
+          onKeyDown={(event) => {
+            if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+              event.preventDefault();
+            }
+          }}
+        />
+        {keyword !== '' && (
+          <IconButton type='button' onClick={clickDeleteButtonHandler}>
+            <RiDeleteBack2Line />
+          </IconButton>
+        )}
+
         <IconButton type='button'>
           <BiSearch />
         </IconButton>
@@ -31,7 +73,7 @@ const IconButton = styled.button`
   cursor: pointer;
 `;
 
-const StyledTextField = styled.div<{ isFocused: boolean }>`
+const StyledTextField = styled.div<{ $isFocused: boolean }>`
   background-color: ${(props) => props.theme.textBackground};
   display: flex;
   justify-content: space-between;
@@ -52,9 +94,9 @@ const StyledTextField = styled.div<{ isFocused: boolean }>`
     border: none;
   }
 
-  border-radius: ${(props) => (props.isFocused ? '20px 20px 0px 0px' : '20px')};
+  border-radius: ${(props) => (props.$isFocused ? '20px 20px 0px 0px' : '20px')};
   border: ${(props) => props.theme.textBorder};
-  border-bottom: ${(props) => (props.isFocused ? 'none' : props.theme.textBorder)};
+  border-bottom: ${(props) => (props.$isFocused ? 'none' : props.theme.textBorder)};
 `;
 
 const StyledSearchArea = styled.div`

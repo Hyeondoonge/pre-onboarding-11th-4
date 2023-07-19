@@ -7,15 +7,19 @@ interface UserThemeProviderProps {
 }
 type Themes = keyof typeof theme;
 
-export const UserThemeContext = createContext<React.Dispatch<React.SetStateAction<Themes>>>(
-  () => {}
-);
+export const UserThemeContext = createContext<{
+  userTheme: Themes;
+  setUserTheme: React.Dispatch<React.SetStateAction<Themes>>;
+}>({
+  userTheme: 'Light',
+  setUserTheme: () => {}
+});
 
 export default function CustomThemeProvider({ children }: UserThemeProviderProps) {
-  const [userTheme, setUserTheme] = useState<Themes>('Light');
+  const [userTheme, setUserTheme] = useState<Themes>('Dark');
 
   return (
-    <UserThemeContext.Provider value={setUserTheme}>
+    <UserThemeContext.Provider value={{ userTheme, setUserTheme }}>
       <ThemeProvider theme={theme[userTheme]}>{children}</ThemeProvider>
     </UserThemeContext.Provider>
   );
