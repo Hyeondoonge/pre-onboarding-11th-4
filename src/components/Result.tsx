@@ -43,7 +43,6 @@ function List({ searchResult, loading }: ListProps) {
   const { keyword, setKeyword } = useSearchKeywordContext();
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const { data, error } = searchResult;
-  const matchingKeyword = useRef(keyword);
 
   const MAX_LENGTH = 10;
   const RESULT_LENGTH = Math.min(MAX_LENGTH, data.length);
@@ -74,7 +73,6 @@ function List({ searchResult, loading }: ListProps) {
 
   useEffect(() => {
     setSelectedIndex(-1);
-    matchingKeyword.current = keyword;
   }, [searchResult]);
 
   if (error) throw error;
