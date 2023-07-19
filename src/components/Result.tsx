@@ -126,9 +126,9 @@ const StyledItem = styled.li`
 const StyledSickItem = styled(StyledItem)<{ isSelected: boolean }>`
   cursor: pointer;
   background-color: ${(props) => (props.isSelected ? props.theme.focused : 'none')};
-
+  color: ${(props) => props.theme.main};
   .highlight {
-    font-weight: 700;
+    color: ${(props) => props.theme.highlight};
   }
 `;
 
