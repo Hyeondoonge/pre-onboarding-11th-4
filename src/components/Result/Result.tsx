@@ -1,6 +1,6 @@
 import ErrorBoundary from '../ErrorBoundary';
 import ResultErrorFallback from '../ResultErrorFallback';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TResultResponse } from 'types/common';
 import { useSearchKeywordContext } from 'hooks/useSearchKeywordContext';
 import { getSearchURL } from 'utils/url';
