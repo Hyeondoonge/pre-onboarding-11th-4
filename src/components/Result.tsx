@@ -8,6 +8,8 @@ interface ResultProps {
   keyword: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   searchResult: TResultResponse;
+  fetchResult: (keyword: string) => void;
+  initResult: () => void;
 }
 interface ListProps {
   keyword: string;
@@ -15,7 +17,21 @@ interface ListProps {
   searchResult: TResultResponse;
 }
 
-export default function Result({ keyword, setKeyword, searchResult }: ResultProps) {
+export default function Result({
+  keyword,
+  setKeyword,
+  searchResult,
+  fetchResult,
+  initResult
+}: ResultProps) {
+  useEffect(() => {
+    if (keyword) fetchResult(keyword);
+
+    return () => {
+      initResult();
+    };
+  }, []);
+
   return (
     <StyledResult
       onClick={(event) => {

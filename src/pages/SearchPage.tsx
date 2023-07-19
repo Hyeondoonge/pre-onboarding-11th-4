@@ -38,7 +38,13 @@ export default function SearchPage() {
         />
         {isFocused && (
           <ErrorBoundary fallback={<ResultErrorFallback />}>
-            <Result keyword={keyword} searchResult={searchResult} setKeyword={setKeyword} />
+            <Result
+              keyword={keyword}
+              searchResult={searchResult}
+              setKeyword={setKeyword}
+              fetchResult={fetchResult}
+              initResult={initResult}
+            />
           </ErrorBoundary>
         )}
       </div>
