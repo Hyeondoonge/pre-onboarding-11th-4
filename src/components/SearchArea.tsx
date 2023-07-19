@@ -4,6 +4,7 @@ import { RiDeleteBack2Line } from 'react-icons/ri';
 import { ChangeEvent } from 'react';
 import useDebounce from 'hooks/useDebounce';
 import { useSearchKeywordContext } from 'hooks/useSearchKeywordContext';
+import { getSearchURL } from 'utils/url';
 
 interface SearchAreaProps {
   isFloating: boolean;
@@ -52,10 +53,11 @@ export default function SearchArea({
             <RiDeleteBack2Line />
           </IconButton>
         )}
-
-        <IconButton type='button'>
-          <BiSearch />
-        </IconButton>
+        <a href={getSearchURL(keyword)}>
+          <IconButton type='button'>
+            <BiSearch />
+          </IconButton>
+        </a>
       </StyledTextField>
     </StyledSearchArea>
   );

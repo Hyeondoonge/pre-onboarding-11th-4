@@ -4,6 +4,7 @@ import ResultErrorFallback from './ResultErrorFallback';
 import { useEffect, useRef, useState } from 'react';
 import { TResultResponse } from 'types/common';
 import { useSearchKeywordContext } from 'hooks/useSearchKeywordContext';
+import { getSearchURL } from 'utils/url';
 
 interface ResultProps {
   searchResult: TResultResponse;
@@ -114,11 +115,10 @@ interface SickItemProps {
 
 function SickItem({ keyword, isSelected, name, handleMouseOver }: SickItemProps) {
   const splited = name.split(keyword);
-  const HYPER_LINK = `https://clinicaltrialskorea.com/studies?conditions=${encodeURI(name)}`;
 
   return (
     <StyledSickItem $isSelected={isSelected} onMouseOver={handleMouseOver}>
-      <a href={HYPER_LINK}>
+      <a href={getSearchURL(name)}>
         {splited.map((value, index) => (
           <span key={index}>
             {value}
