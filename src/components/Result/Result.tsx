@@ -1,10 +1,10 @@
-import { styled } from 'styled-components';
-import ErrorBoundary from './ErrorBoundary';
-import ResultErrorFallback from './ResultErrorFallback';
+import ErrorBoundary from '../ErrorBoundary';
+import ResultErrorFallback from '../ResultErrorFallback';
 import { useEffect, useRef, useState } from 'react';
 import { TResultResponse } from 'types/common';
 import { useSearchKeywordContext } from 'hooks/useSearchKeywordContext';
 import { getSearchURL } from 'utils/url';
+import * as Styled from './Result.styled';
 
 interface ResultProps {
   searchResult: TResultResponse;
@@ -17,8 +17,16 @@ interface ListProps {
   loading: boolean;
 }
 
+interface SickItemProps {
+  keyword: string;
+  isSelected: boolean;
+  handleMouseOver: () => void;
+  name: string;
+}
+
 export default function Result({ searchResult, fetchResult, initResult, loading }: ResultProps) {
   const { keyword } = useSearchKeywordContext();
+
   useEffect(() => {
     if (keyword) fetchResult(keyword);
 
@@ -28,18 +36,18 @@ export default function Result({ searchResult, fetchResult, initResult, loading 
   }, []);
 
   return (
-    <StyledResult>
-      <StyledBorder>
+    <Styled.Result>
+      <Styled.Border>
         <div />
-      </StyledBorder>
+      </Styled.Border>
       <ErrorBoundary fallback={<ResultErrorFallback />}>
-        <List searchResult={searchResult} loading={loading} />
+        <SickList searchResult={searchResult} loading={loading} />
       </ErrorBoundary>
-    </StyledResult>
+    </Styled.Result>
   );
 }
 
-function List({ searchResult, loading }: ListProps) {
+function SickList({ searchResult, loading }: ListProps) {
   const { keyword, setKeyword } = useSearchKeywordContext();
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const { data, error } = searchResult;
@@ -78,13 +86,15 @@ function List({ searchResult, loading }: ListProps) {
   if (error) throw error;
 
   return (
-    <StyledList>
+    <Styled.List>
       {loading ? (
-        <StyledLoading>로딩 중입니다</StyledLoading>
+        <Styled.Loading>로딩 중입니다</Styled.Loading>
       ) : (
         <>
-          {keyword === '' && RESULT_LENGTH === 0 && <StyledItem>최근검색어가 없습니다.</StyledItem>}
-          {keyword !== '' && RESULT_LENGTH === 0 && <StyledItem>검색결과가 없습니다.</StyledItem>}
+          {keyword === '' && RESULT_LENGTH === 0 && (
+            <Styled.Item>최근검색어가 없습니다.</Styled.Item>
+          )}
+          {keyword !== '' && RESULT_LENGTH === 0 && <Styled.Item>검색결과가 없습니다.</Styled.Item>}
           {data
             .filter((_, index) => index < RESULT_LENGTH)
             .map(({ sickNm }, index) => (
@@ -100,22 +110,15 @@ function List({ searchResult, loading }: ListProps) {
             ))}
         </>
       )}
-    </StyledList>
+    </Styled.List>
   );
-}
-
-interface SickItemProps {
-  keyword: string;
-  isSelected: boolean;
-  handleMouseOver: () => void;
-  name: string;
 }
 
 function SickItem({ keyword, isSelected, name, handleMouseOver }: SickItemProps) {
   const splited = name.split(keyword);
 
   return (
-    <StyledSickItem $isSelected={isSelected} onMouseOver={handleMouseOver}>
+    <Styled.SickItem $isSelected={isSelected} onMouseOver={handleMouseOver}>
       <a href={getSearchURL(name)}>
         {splited.map((value, index) => (
           <span key={index}>
@@ -124,62 +127,6 @@ function SickItem({ keyword, isSelected, name, handleMouseOver }: SickItemProps)
           </span>
         ))}
       </a>
-    </StyledSickItem>
+    </Styled.SickItem>
   );
 }
-
-const StyledResult = styled.div`
-  position: relative;
-  width: 100%;
-
-  background-color: ${(props) => props.theme.textBackground};
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  overflow: hidden;
-  color: ${(props) => props.theme.main};
-  border: ${(props) => props.theme.textBorder};
-  border-top: none;
-`;
-
-const StyledList = styled.ul`
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledItem = styled.li`
-  padding: 15px;
-`;
-
-const StyledSickItem = styled(StyledItem)<{ $isSelected: boolean }>`
-  cursor: pointer;
-  background-color: ${(props) => (props.$isSelected ? props.theme.focused : 'none')};
-
-  .highlight {
-    color: ${(props) => props.theme.highlight};
-  }
-
-  a {
-    display: block;
-    color: ${(props) => props.theme.main};
-    text-decoration: none;
-  }
-`;
-
-const StyledBorder = styled.div`
-  display: flex;
-  justify-content: center;
-  div {
-    width: 95%;
-    height: 1px;
-    background-color: ${(props) => props.theme.border};
-    position: absolute;
-    top: 0;
-  }
-`;
-
-const StyledLoading = styled.div`
-  padding: 15px;
-`;

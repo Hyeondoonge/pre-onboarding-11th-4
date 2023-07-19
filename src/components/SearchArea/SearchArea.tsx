@@ -1,10 +1,10 @@
-import { styled } from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
 import { RiDeleteBack2Line } from 'react-icons/ri';
 import { ChangeEvent } from 'react';
 import useDebounce from 'hooks/useDebounce';
 import { useSearchKeywordContext } from 'hooks/useSearchKeywordContext';
 import { getSearchURL } from 'utils/url';
+import * as Styled from './SearchArea.styled';
 
 interface SearchAreaProps {
   isFloating: boolean;
@@ -35,8 +35,8 @@ export default function SearchArea({
   };
 
   return (
-    <StyledSearchArea>
-      <StyledTextField $isFocused={isFloating} onFocus={() => setIsFloating(true)}>
+    <Styled.SearchArea>
+      <Styled.TextField $isFocused={isFloating} onFocus={() => setIsFloating(true)}>
         <input
           type='text'
           value={keyword}
@@ -49,54 +49,16 @@ export default function SearchArea({
           }}
         />
         {keyword !== '' && (
-          <IconButton type='button' onClick={clickDeleteButtonHandler}>
+          <Styled.IconButton type='button' onClick={clickDeleteButtonHandler}>
             <RiDeleteBack2Line />
-          </IconButton>
+          </Styled.IconButton>
         )}
         <a href={getSearchURL(keyword)}>
-          <IconButton type='button'>
+          <Styled.IconButton type='button'>
             <BiSearch />
-          </IconButton>
+          </Styled.IconButton>
         </a>
-      </StyledTextField>
-    </StyledSearchArea>
+      </Styled.TextField>
+    </Styled.SearchArea>
   );
 }
-
-const IconButton = styled.button`
-  background-color: transparent;
-  border: none;
-  font-size: inherit;
-  color: ${(props) => props.theme.secondary};
-  cursor: pointer;
-`;
-
-const StyledTextField = styled.div<{ $isFocused: boolean }>`
-  background-color: ${(props) => props.theme.textBackground};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 15px;
-  font-size: 1.25rem;
-
-  input {
-    color: ${(props) => props.theme.main};
-    font-size: inherit;
-    background-color: transparent;
-    border: none;
-    width: 85%;
-  }
-  input:focus {
-    outline: none;
-    border: none;
-  }
-
-  border-radius: ${(props) => (props.$isFocused ? '20px 20px 0px 0px' : '20px')};
-  border: ${(props) => props.theme.textBorder};
-  border-bottom: ${(props) => (props.$isFocused ? 'none' : props.theme.textBorder)};
-`;
-
-const StyledSearchArea = styled.div`
-  width: 100%;
-`;
