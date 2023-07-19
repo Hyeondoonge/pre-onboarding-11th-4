@@ -3,24 +3,13 @@ import Result from 'components/Result';
 import ResultErrorFallback from 'components/ResultErrorFallback';
 import SearchArea from 'components/SearchArea';
 import SearchKeywordProvider from 'contexts/SearchKeywordProvider';
+import useFloating from 'hooks/useFloating';
 import useSearchResult from 'hooks/useSearchResult';
-import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 export default function SearchPage() {
-  const [isFocused, setIsFocused] = useState(false);
+  const { isFloating, setIsFloating } = useFloating();
   const { searchResult, fetchResult, initResult, loading } = useSearchResult();
-
-  useEffect(() => {
-    const handleWindowClick = () => {
-      setIsFocused(false);
-    };
-
-    window.addEventListener('click', handleWindowClick);
-    return () => {
-      window.removeEventListener('click', handleWindowClick);
-    };
-  }, []);
 
   return (
     <SearchKeywordProvider>
@@ -28,28 +17,35 @@ export default function SearchPage() {
         <div>
           <h2>국내 모든 임상시험 검색하고 온라인으로 참여하기</h2>
         </div>
-        <div>
-          <SearchArea
-            isFocused={isFocused}
-            setIsFocused={setIsFocused}
-            fetchResult={fetchResult}
-            initResult={initResult}
-          />
-          {isFocused && (
-            <ErrorBoundary fallback={<ResultErrorFallback />}>
-              <Result
-                searchResult={searchResult}
-                fetchResult={fetchResult}
-                initResult={initResult}
-                loading={loading}
-              />
-            </ErrorBoundary>
-          )}
+        <div onClick={(event) => event.stopPropagation()}>
+          <StyledWrapper>
+            <SearchArea
+              isFloating={isFloating}
+              setIsFloating={setIsFloating}
+              fetchResult={fetchResult}
+              initResult={initResult}
+            />
+            {isFloating && (
+              <ErrorBoundary fallback={<ResultErrorFallback />}>
+                <Result
+                  searchResult={searchResult}
+                  fetchResult={fetchResult}
+                  initResult={initResult}
+                  loading={loading}
+                />
+              </ErrorBoundary>
+            )}
+          </StyledWrapper>
         </div>
       </StyledSearchPage>
     </SearchKeywordProvider>
   );
 }
+
+const StyledWrapper = styled.div`
+  box-shadow: ${(props) => props.theme.shadow};
+  border-radius: 20px;
+`;
 
 const StyledSearchPage = styled.div`
   padding: 50px 100px;

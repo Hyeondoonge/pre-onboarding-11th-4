@@ -1,5 +1,5 @@
 import { TResultResponse } from 'types/common';
-import { cacheRepository } from 'Repository/CacheRepository';
+import { cacheRepository } from 'repositories/CacheRepository';
 import { useState } from 'react';
 
 export default function useSearchResult() {
