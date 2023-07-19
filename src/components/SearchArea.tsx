@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
 import { RiDeleteBack2Line } from 'react-icons/ri';
 import { ChangeEvent, useEffect } from 'react';
+import useDebounce from 'hooks/useDebounce';
 
 interface SearchAreaProps {
   isFocused: boolean;
@@ -20,10 +21,13 @@ export default function SearchArea({
   fetchResult,
   initResult
 }: SearchAreaProps) {
+  const debounce = useDebounce();
+
   const changeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setKeyword(value);
-    fetchResult(value);
+
+    debounce(() => fetchResult(value), 500);
   };
 
   const clickDeleteButtonHandler = () => {
