@@ -45,7 +45,7 @@ function List({ keyword, setKeyword }: ListProps) {
   };
 
   useEffect(() => {
-    const handleKeyup = (event: KeyboardEvent) => {
+    const handleKeydown = (event: KeyboardEvent) => {
       if (event.key === 'ArrowUp') {
         updateFocusedItem(selectedIndex - 1 <= -1 ? RESULT_LENGTH - 1 : selectedIndex - 1);
       } else if (event.key === 'ArrowDown') {
@@ -53,10 +53,10 @@ function List({ keyword, setKeyword }: ListProps) {
       }
     };
 
-    window.addEventListener('keydown', handleKeyup);
+    window.addEventListener('keydown', handleKeydown);
 
     return () => {
-      window.removeEventListener('keydown', handleKeyup);
+      window.removeEventListener('keydown', handleKeydown);
     };
   }, [selectedIndex, updateFocusedItem, RESULT_LENGTH]);
 
