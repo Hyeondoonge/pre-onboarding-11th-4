@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { styled } from 'styled-components';
 import ErrorBoundary from './ErrorBoundary';
 import ResultErrorFallback from './ResultErrorFallback';
@@ -9,14 +8,12 @@ import useDebounce from 'hooks/useDebounce';
 
 interface ResultProps {
   keyword: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
 interface ListProps {
   keyword: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function Result({ keyword, setKeyword }: ResultProps) {
+export default function Result({ keyword }: ResultProps) {
   return (
     <StyledResult
       onClick={(event) => {
@@ -27,13 +24,13 @@ export default function Result({ keyword, setKeyword }: ResultProps) {
         <div />
       </StyledBorder>
       <ErrorBoundary fallback={<ResultErrorFallback />}>
-        <List keyword={keyword} setKeyword={setKeyword} />
+        <List keyword={keyword} />
       </ErrorBoundary>
     </StyledResult>
   );
 }
 
-function List({ keyword, setKeyword }: ListProps) {
+function List({ keyword }: ListProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [searchResult, setSearchResult] = useState<TResultResponse>({ data: [], error: undefined });
   const { data, error } = searchResult;
