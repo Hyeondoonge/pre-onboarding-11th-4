@@ -1,8 +1,8 @@
 # pre-onboarding-11th-4
 
-원티드 프리온보딩 인턴십 4주차 과제 | 임상실험 검색 사이트 웹 서비스 개발
+원티드 프리온보딩 인턴십 4주차 개인 과제 | 임상실험 검색 사이트 웹 서비스 개발
 
-7.16 ~ 7.19 약 3일동안 개인으로 진행했습니다.
+7.17 ~ 7.19 약 3일 진행
 
 ## [배포 사이트](https://main--idyllic-axolotl-bc9f8d.netlify.app/)
 
@@ -15,7 +15,7 @@
 ### [✨ 주요 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-1)
 
 - [필수 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%ED%95%84%EC%88%98-%EA%B8%B0%EB%8A%A5)
-- [개인 추가 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EA%B0%9C%EC%9D%B8-%EC%84%A0%ED%83%9D-%EA%B8%B0%EB%8A%A5)
+- [개인 추가 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EA%B0%9C%EC%9D%B8-%EC%B6%94%EA%B0%80-%EA%B8%B0%EB%8A%A5)
 
 ### [？ 고민했던 부분](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-%EA%B3%A0%EB%AF%BC%ED%96%88%EB%8D%98-%EB%B6%80%EB%B6%84-1)
 
@@ -44,7 +44,7 @@ REACT_APP_API_END_POINT = http://localhost:4000
 ### Install & Start
 
 ```
-$ npm install & npm start
+$ npm install && npm start
 ```
 
 ### Build
@@ -108,10 +108,14 @@ Local storage에 저장할 경우 서비스를 나갔다와도 캐싱 데이터�
 직접 접근해서 수정하는 경우가 있을 수 있습니다. 이를 대비해 데이터의 형식을 확인하여 옳은 값을 가져오도록 했습니다.
 크게 Null 인지, 데이터 형식이 옳은지, 유효기간이 지나지 않았는지를 검사하도록 구현했습니다.
 
+---
+
 ### 입력마다 API 호출하지 않도록 API 호출 횟수를 줄이는 전략 수립 및 실행 ([< > useDebounce](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/src/hooks/useDebounce.ts))
 
 연속된 입력이 발생할 경우 불필요한 통신 비용이 발생할 수 있습니다. 이러한 상황에서 사용할 수 있는 debounce 기법을 이용했습니다.
 추상화를 위해 훅으로 분리했습니다.
+
+---
 
 ### 키보드만으로 추천 검색어들로 이동 가능 ([< > Result](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/src/components/Result/Result.tsx))
 
