@@ -5,6 +5,7 @@ import ResultErrorFallback from './ResultErrorFallback';
 import { useEffect, useState } from 'react';
 import { TResultResponse } from 'types/common';
 import { cacheRepository } from 'Repository/CacheRepository';
+import useDebounce from 'hooks/useDebounce';
 
 interface ResultProps {
   keyword: string;
@@ -64,27 +65,28 @@ function List({ keyword, setKeyword }: ListProps) {
     };
   }, [selectedIndex, RESULT_LENGTH]);
 
+  const debounce = useDebounce();
+
   useEffect(() => {
     const fetchResult = async () => {
       if (keyword === '') {
         setSearchResult({ data: [], error: undefined });
         return;
       }
-
       setSelectedIndex(-1);
 
       const res = await cacheRepository.get(keyword);
       setSearchResult(res);
     };
 
-    fetchResult();
+    debounce(fetchResult, 500);
   }, [keyword]);
 
   if (error) throw error;
 
   return (
     <StyledList>
-      {keyword === '' && <StyledItem>최근검색어가 없습니다.</StyledItem>}
+      {keyword === '' && RESULT_LENGTH === 0 && <StyledItem>최근검색어가 없습니다.</StyledItem>}
       {keyword !== '' && RESULT_LENGTH === 0 && <StyledItem>검색결과가 없습니다.</StyledItem>}
       {data
         .filter((_, index) => index < RESULT_LENGTH)
