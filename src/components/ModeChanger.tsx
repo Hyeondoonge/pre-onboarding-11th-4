@@ -16,7 +16,8 @@ export default function ModeChanger() {
 }
 
 const StyledWrapper = styled.div`
-  padding: 20px;
+  padding: 20px 20px;
+  padding-bottom: 0px;
   display: flex;
   justify-content: flex-end;
 `;
