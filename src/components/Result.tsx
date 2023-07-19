@@ -162,6 +162,7 @@ const StyledSickItem = styled(StyledItem)<{ $isSelected: boolean }>`
   }
 
   a {
+    display: block;
     color: ${(props) => props.theme.main};
     text-decoration: none;
   }
