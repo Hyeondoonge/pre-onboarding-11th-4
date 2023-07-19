@@ -37,7 +37,6 @@ class CacheRepository implements CacheRepositoryInterface {
     } catch (error) {
       if (error instanceof AxiosError) {
         if (!error.response) {
-          // throw new Error('요청을 정상적으로 처리할 수 없습니다. 서버가 작동하는지 확인하세요.');
           return {
             data: [],
             error: new Error('요청을 정상적으로 처리할 수 없습니다. 서버가 작동하는지 확인하세요.')
@@ -47,11 +46,9 @@ class CacheRepository implements CacheRepositoryInterface {
             data: [],
             error: new Error('요청 중 오류가 발생했습니다. 요청 URL을 확인하세요.')
           };
-          // throw new Error('요청 중 오류가 발생했습니다. 요청 URL을 확인하세요.');
         }
       } else {
         return { data: [], error: new Error('AxiosError 이외의 알 수 없는 오류가 발생했습니다') };
-        // throw new Error('AxiosError 이외의 알 수 없는 오류가 발생했습니다');
       }
     }
   }
