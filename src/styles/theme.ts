@@ -10,7 +10,9 @@ export const Dark: DefaultTheme = {
   border: '#A1A1A1',
   focused: '#333333',
   textBorder: '1px solid #A1A1A1',
-  highlight: '#95B2FD'
+  highlight: '#95B2FD',
+  modeColor: '#ffe207',
+  modeBackground: '#252525'
 };
 
 export const Light: DefaultTheme = {
@@ -24,5 +26,7 @@ export const Light: DefaultTheme = {
   focused: '#F1F1F1',
   shadow: '#ABABAB',
   textBorder: 'none',
-  highlight: '#4B7EFF'
+  highlight: '#4B7EFF',
+  modeColor: '#f49d06',
+  modeBackground: '#a1c3e1'
 };

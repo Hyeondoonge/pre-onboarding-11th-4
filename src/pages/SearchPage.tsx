@@ -44,6 +44,7 @@ export default function SearchPage() {
 
 const StyledSearchPage = styled.div`
   height: 100vh;
+  padding: 0 100px;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -13,5 +13,7 @@ declare module 'styled-components' {
     shadow?: string;
     textBorder: string;
     highlight: string;
+    modeColor: string;
+    modeBackground: string;
   }
 }

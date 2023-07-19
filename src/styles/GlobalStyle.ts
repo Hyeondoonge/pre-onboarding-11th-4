@@ -20,7 +20,6 @@ const GlobalStyle = createGlobalStyle`
     height: 100vh;
     width: 720px;
     background-color: ${(props) => props.theme.background};
-    padding: 0 100px;
   }
 `;
 
