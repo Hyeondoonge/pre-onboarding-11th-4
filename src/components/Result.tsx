@@ -10,11 +10,13 @@ interface ResultProps {
   searchResult: TResultResponse;
   fetchResult: (keyword: string) => void;
   initResult: () => void;
+  loading: boolean;
 }
 interface ListProps {
   keyword: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   searchResult: TResultResponse;
+  loading: boolean;
 }
 
 export default function Result({
@@ -22,7 +24,8 @@ export default function Result({
   setKeyword,
   searchResult,
   fetchResult,
-  initResult
+  initResult,
+  loading
 }: ResultProps) {
   useEffect(() => {
     if (keyword) fetchResult(keyword);
@@ -42,13 +45,18 @@ export default function Result({
         <div />
       </StyledBorder>
       <ErrorBoundary fallback={<ResultErrorFallback />}>
-        <List keyword={keyword} setKeyword={setKeyword} searchResult={searchResult} />
+        <List
+          keyword={keyword}
+          setKeyword={setKeyword}
+          searchResult={searchResult}
+          loading={loading}
+        />
       </ErrorBoundary>
     </StyledResult>
   );
 }
 
-function List({ keyword, setKeyword, searchResult }: ListProps) {
+function List({ keyword, setKeyword, searchResult, loading }: ListProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const { data, error } = searchResult;
   const matchingKeyword = useRef(keyword);
@@ -89,21 +97,27 @@ function List({ keyword, setKeyword, searchResult }: ListProps) {
 
   return (
     <StyledList>
-      {keyword === '' && RESULT_LENGTH === 0 && <StyledItem>최근검색어가 없습니다.</StyledItem>}
-      {keyword !== '' && RESULT_LENGTH === 0 && <StyledItem>검색결과가 없습니다.</StyledItem>}
-      {data
-        .filter((_, index) => index < RESULT_LENGTH)
-        .map(({ sickNm }, index) => (
-          <SickItem
-            key={index}
-            keyword={keyword}
-            isSelected={selectedIndex === index}
-            name={sickNm}
-            handleMouseOver={() => {
-              setSelectedIndex(index);
-            }}
-          />
-        ))}
+      {loading ? (
+        <StyledLoading>로딩 중입니다</StyledLoading>
+      ) : (
+        <>
+          {keyword === '' && RESULT_LENGTH === 0 && <StyledItem>최근검색어가 없습니다.</StyledItem>}
+          {keyword !== '' && RESULT_LENGTH === 0 && <StyledItem>검색결과가 없습니다.</StyledItem>}
+          {data
+            .filter((_, index) => index < RESULT_LENGTH)
+            .map(({ sickNm }, index) => (
+              <SickItem
+                key={index}
+                keyword={keyword}
+                isSelected={selectedIndex === index}
+                name={sickNm}
+                handleMouseOver={() => {
+                  setSelectedIndex(index);
+                }}
+              />
+            ))}
+        </>
+      )}
     </StyledList>
   );
 }
@@ -174,4 +188,8 @@ const StyledBorder = styled.div`
     position: absolute;
     top: 0;
   }
+`;
+
+const StyledLoading = styled.div`
+  padding: 15px;
 `;

@@ -9,7 +9,7 @@ import { styled } from 'styled-components';
 export default function SearchPage() {
   const [isFocused, setIsFocused] = useState(false);
   const [keyword, setKeyword] = useState('');
-  const { searchResult, fetchResult, initResult } = useSearchResult();
+  const { searchResult, fetchResult, initResult, loading } = useSearchResult();
 
   useEffect(() => {
     const handleWindowClick = () => {
@@ -44,6 +44,7 @@ export default function SearchPage() {
               setKeyword={setKeyword}
               fetchResult={fetchResult}
               initResult={initResult}
+              loading={loading}
             />
           </ErrorBoundary>
         )}
