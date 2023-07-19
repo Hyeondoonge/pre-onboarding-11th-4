@@ -44,7 +44,7 @@ function List({ keyword, setKeyword }: ListProps) {
     if (!data[index]) return;
     setSelectedIndex(index);
     // TODO: data[index] undefined 오류
-    setKeyword(data[index]?.sickNm ?? '');
+    (document.querySelector('input') as HTMLInputElement).value = data[index]?.sickNm ?? '';
   };
 
   useEffect(() => {
@@ -65,11 +65,14 @@ function List({ keyword, setKeyword }: ListProps) {
   }, [selectedIndex, RESULT_LENGTH]);
 
   useEffect(() => {
-    if (keyword === '') {
-      setSearchResult({ data: [], error: undefined });
-      return;
-    }
     const fetchResult = async () => {
+      if (keyword === '') {
+        setSearchResult({ data: [], error: undefined });
+        return;
+      }
+
+      setSelectedIndex(-1);
+
       const res = await cacheRepository.get(keyword);
       setSearchResult(res);
     };
