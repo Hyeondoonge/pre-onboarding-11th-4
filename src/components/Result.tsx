@@ -28,7 +28,6 @@ export default function Result({ keyword }: ResultProps) {
 }
 
 function List({ keyword }: ListProps) {
-  // TODO: keyword로 하이라이팅
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const data = {
