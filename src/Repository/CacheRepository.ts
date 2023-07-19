@@ -28,8 +28,6 @@ class CacheRepository implements CacheRepositoryInterface {
       const parsedItem = JSON.parse(item);
 
       if (!isCachedResult(parsedItem) || !isValidateExpiredTime(parsedItem.expired_time)) {
-        console.log(parsedItem, isCachedResult(parsedItem));
-
         const res = await getResult(keyword);
         const cachedResult = this.save(keyword, res);
         return { data: cachedResult.data, error: undefined };
