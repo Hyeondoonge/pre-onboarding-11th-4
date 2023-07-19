@@ -8,13 +8,20 @@
 
 ## 목차
 
-### [⛳️ 시작 방법](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/README.md/#주요-기능)
+### [⛳️ 시작 방법](https://github.com/Hyeondoonge/pre-onboarding-11th-4/#시작-방법)
 
-### [⚒️ 기술 스택](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/README.md/#주요-기능)
+### [⚒️ 기술 스택](https://github.com/Hyeondoonge/pre-onboarding-11th-4/#기술-스택)
 
-### [✨ 주요 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/README.md/#주요-기능)
+### [✨ 주요 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4/#주요-기능)
 
-### [？ 고민했던 부분](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/README.md/#주요-기능)
+- [필수 기능]()
+- [개인 추가 기능]()
+
+### [？ 고민했던 부분](https://github.com/Hyeondoonge/pre-onboarding-11th-4/#고민했던-부분)
+
+- [API 호출별로 로컬 캐싱 구현]()
+- [입력마다 API 호출하지 않도록 API 호출 횟수를 줄이는 전략 수립 및 실행]()
+- [키보드만으로 추천 검색어들로 이동 가능]()
 
 ## ⛳️ 시작 방법
 
@@ -79,38 +86,38 @@ $ npm build
 
 ## ？ 고민했던 부분
 
-- API 호출별로 로컬 캐싱 구현 ([< > CacheRepository](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/src/repositories/CacheRepository.ts))
+### API 호출별로 로컬 캐싱 구현 ([< > CacheRepository](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/src/repositories/CacheRepository.ts))
 
-  1. 캐싱된 데이터를 관리할 저장소를 구현하기 위한 도구: object vs ☑️ class
+1. 캐싱된 데이터를 관리할 저장소를 구현하기 위한 도구: object vs ☑️ class
 
-  object는 구현하기 쉽다는 장점이 있지만, 다른 모듈에서 쉽게 수정할 수 있어 그에 따라 데이터 변경이 어디서 일어나는지 파악이 어렵다는 단점이 있습니다.
-  class로 구현하면 object 보다는 코드를 더 작성해야되지만, private 하게 데이터를 관리할 수 있는 기능을 지원합니다.
+object는 구현하기 쉽다는 장점이 있지만, 다른 모듈에서 쉽게 수정할 수 있어 그에 따라 데이터 변경이 어디서 일어나는지 파악이 어렵다는 단점이 있습니다.
+class로 구현하면 object 보다는 코드를 더 작성해야되지만, private 하게 데이터를 관리할 수 있는 기능을 지원합니다.
 
-  따라서 데이터를 프라이빗하게 관리할 수 있는 장점을 가진 class를 선택했습니다.
+따라서 데이터를 프라이빗하게 관리할 수 있는 장점을 가진 class를 선택했습니다.
 
-  2. 데이터 저장 위치: 앱 vs ☑️ local storage
+2. 데이터 저장 위치: 앱 vs ☑️ local storage
 
-  여러 경우의 수에 대해 고민했습니다. 앱에 저장하는 것은 외부 요소의 영향을 받지 않아 예측가능합니다. 하지만 서비스를 끄게되면 데이터도 소멸됩니다.
+여러 경우의 수에 대해 고민했습니다. 앱에 저장하는 것은 외부 요소의 영향을 받지 않아 예측가능합니다. 하지만 서비스를 끄게되면 데이터도 소멸됩니다.
 
-  Local storage에 저장할 경우 서비스를 나갔다와도 캐싱 데이터를 제공할 수 있습니다. 하지만 local storage에 직접 접근해 수정할 수 있는 단점이 있습니다.
+Local storage에 저장할 경우 서비스를 나갔다와도 캐싱 데이터를 제공할 수 있습니다. 하지만 local storage에 직접 접근해 수정할 수 있는 단점이 있습니다.
 
-  외부 요소인 local storage의 기능이 변화한다고해도 영향을 받는 코드를 최소화하고 코드를 조금 더 작성해서 안정성을 보장함으로서, 서비스를 껐다 켜도 데이터를 유지하여 좋은 UX를 제공하기위해 local storage를 선택했습니다.
+외부 요소인 local storage의 기능이 변화한다고해도 영향을 받는 코드를 최소화하고 코드를 조금 더 작성해서 안정성을 보장함으로서, 서비스를 껐다 켜도 데이터를 유지하여 좋은 UX를 제공하기위해 local storage를 선택했습니다.
 
-  3. 무결성 보장
+3. 무결성 보장
 
-  직접 접근해서 수정하는 경우가 있을 수 있습니다. 이를 대비해 데이터의 형식을 확인하여 옳은 값을 가져오도록 했습니다.
-  크게 Null 인지, 데이터 형식이 옳은지, 유효기간이 지나지 않았는지를 검사하도록 구현했습니다.
+직접 접근해서 수정하는 경우가 있을 수 있습니다. 이를 대비해 데이터의 형식을 확인하여 옳은 값을 가져오도록 했습니다.
+크게 Null 인지, 데이터 형식이 옳은지, 유효기간이 지나지 않았는지를 검사하도록 구현했습니다.
 
-- 입력마다 API 호출하지 않도록 API 호출 횟수를 줄이는 전략 수립 및 실행 ([< > useDebounce](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/src/hooks/useDebounce.ts))
+### 입력마다 API 호출하지 않도록 API 호출 횟수를 줄이는 전략 수립 및 실행 ([< > useDebounce](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/src/hooks/useDebounce.ts))
 
-  연속된 입력이 발생할 경우 불필요한 통신 비용이 발생할 수 있습니다. 이러한 상황에서 사용할 수 있는 debounce 기법을 이용했습니다.
-  추상화를 위해 훅으로 분리했습니다.
+연속된 입력이 발생할 경우 불필요한 통신 비용이 발생할 수 있습니다. 이러한 상황에서 사용할 수 있는 debounce 기법을 이용했습니다.
+추상화를 위해 훅으로 분리했습니다.
 
-- 키보드만으로 추천 검색어들로 이동 가능 ([< > Result](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/src/components/Result/Result.tsx))
+### 키보드만으로 추천 검색어들로 이동 가능 ([< > Result](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/src/components/Result/Result.tsx))
 
-  window 객체에 아래 keydown 이벤트에 핸들러를 바인딩했습니다. 이벤트는 Result 컴포넌트가 떠있을 때 동작하며 언마운트시 이벤트도 함께 제거됩니다.
+window 객체에 아래 keydown 이벤트에 핸들러를 바인딩했습니다. 이벤트는 Result 컴포넌트가 떠있을 때 동작하며 언마운트시 이벤트도 함께 제거됩니다.
 
-  위, 아래 방향키 입력 시 현재 포커스된 아이템을 변경합니다. 이때, 현재 입력된 키워드도 포커스 된 아이템에 맞게 변경됩니다.
+위, 아래 방향키 입력 시 현재 포커스된 아이템을 변경합니다. 이때, 현재 입력된 키워드도 포커스 된 아이템에 맞게 변경됩니다.
 
 ```typescript
 const handleKeydown = (event: KeyboardEvent) => {
