@@ -31,12 +31,13 @@ export default function SearchArea({
         event.stopPropagation();
       }}
     >
-      <StyledTextField
-        isFocused={isFocused}
-        onFocus={() => setIsFocused(true)}
-        onChange={changeInputHandler}
-      >
-        <input type='text' value={keyword} placeholder='질환명을 입력해주세요' />
+      <StyledTextField isFocused={isFocused} onFocus={() => setIsFocused(true)}>
+        <input
+          type='text'
+          value={keyword}
+          placeholder='질환명을 입력해주세요'
+          onChange={changeInputHandler}
+        />
         {keyword !== '' && (
           <IconButton type='button' onClick={clickDeleteButtonHandler}>
             <RiDeleteBack2Line />
