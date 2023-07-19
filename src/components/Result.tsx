@@ -87,7 +87,7 @@ function SickItem({ keyword, isSelected, handleMouseOver, name }: SickItemProps)
   const splited = name.split(keyword);
 
   return (
-    <StyledSickItem isSelected={isSelected} onMouseOver={handleMouseOver}>
+    <StyledSickItem $isSelected={isSelected} onMouseOver={handleMouseOver}>
       {splited.map((value, index) => (
         <span>
           {value}
@@ -123,9 +123,9 @@ const StyledItem = styled.li`
   padding: 15px;
 `;
 
-const StyledSickItem = styled(StyledItem)<{ isSelected: boolean }>`
+const StyledSickItem = styled(StyledItem)<{ $isSelected: boolean }>`
   cursor: pointer;
-  background-color: ${(props) => (props.isSelected ? props.theme.focused : 'none')};
+  background-color: ${(props) => (props.$isSelected ? props.theme.focused : 'none')};
   color: ${(props) => props.theme.main};
   .highlight {
     color: ${(props) => props.theme.highlight};

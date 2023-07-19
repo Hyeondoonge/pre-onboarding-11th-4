@@ -31,7 +31,7 @@ export default function SearchArea({
         event.stopPropagation();
       }}
     >
-      <StyledTextField isFocused={isFocused} onFocus={() => setIsFocused(true)}>
+      <StyledTextField $isFocused={isFocused} onFocus={() => setIsFocused(true)}>
         <input
           type='text'
           value={keyword}
@@ -60,7 +60,7 @@ const IconButton = styled.button`
   cursor: pointer;
 `;
 
-const StyledTextField = styled.div<{ isFocused: boolean }>`
+const StyledTextField = styled.div<{ $isFocused: boolean }>`
   background-color: ${(props) => props.theme.textBackground};
   display: flex;
   justify-content: space-between;
@@ -81,9 +81,9 @@ const StyledTextField = styled.div<{ isFocused: boolean }>`
     border: none;
   }
 
-  border-radius: ${(props) => (props.isFocused ? '20px 20px 0px 0px' : '20px')};
+  border-radius: ${(props) => (props.$isFocused ? '20px 20px 0px 0px' : '20px')};
   border: ${(props) => props.theme.textBorder};
-  border-bottom: ${(props) => (props.isFocused ? 'none' : props.theme.textBorder)};
+  border-bottom: ${(props) => (props.$isFocused ? 'none' : props.theme.textBorder)};
 `;
 
 const StyledSearchArea = styled.div`
