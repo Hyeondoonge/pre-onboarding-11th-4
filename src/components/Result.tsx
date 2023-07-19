@@ -27,11 +27,7 @@ export default function Result({ searchResult, fetchResult, initResult, loading 
   }, []);
 
   return (
-    <StyledResult
-      onClick={(event) => {
-        event.stopPropagation();
-      }}
-    >
+    <StyledResult>
       <StyledBorder>
         <div />
       </StyledBorder>

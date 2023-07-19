@@ -1,20 +1,20 @@
 import { styled } from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
 import { RiDeleteBack2Line } from 'react-icons/ri';
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent } from 'react';
 import useDebounce from 'hooks/useDebounce';
 import { useSearchKeywordContext } from 'hooks/useSearchKeywordContext';
 
 interface SearchAreaProps {
-  isFocused: boolean;
-  setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
+  isFloating: boolean;
+  setIsFloating: React.Dispatch<React.SetStateAction<boolean>>;
   fetchResult: (keyword: string) => void;
   initResult: () => void;
 }
 
 export default function SearchArea({
-  isFocused,
-  setIsFocused,
+  isFloating,
+  setIsFloating,
   fetchResult,
   initResult
 }: SearchAreaProps) {
@@ -34,12 +34,8 @@ export default function SearchArea({
   };
 
   return (
-    <StyledSearchArea
-      onClick={(event) => {
-        event.stopPropagation();
-      }}
-    >
-      <StyledTextField $isFocused={isFocused} onFocus={() => setIsFocused(true)}>
+    <StyledSearchArea>
+      <StyledTextField $isFocused={isFloating} onFocus={() => setIsFloating(true)}>
         <input
           type='text'
           value={keyword}
