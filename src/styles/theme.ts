@@ -24,7 +24,7 @@ export const Light: DefaultTheme = {
   icons: '#838383',
   border: '#C7C7C7',
   focused: '#F1F1F1',
-  shadow: '#ABABAB',
+  shadow: '0px 3px 5px 0px #bebebe',
   textBorder: 'none',
   highlight: '#4B7EFF',
   modeColor: '#f49d06',

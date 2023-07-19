@@ -18,27 +18,34 @@ export default function SearchPage() {
           <h2>국내 모든 임상시험 검색하고 온라인으로 참여하기</h2>
         </div>
         <div onClick={(event) => event.stopPropagation()}>
-          <SearchArea
-            isFloating={isFloating}
-            setIsFloating={setIsFloating}
-            fetchResult={fetchResult}
-            initResult={initResult}
-          />
-          {isFloating && (
-            <ErrorBoundary fallback={<ResultErrorFallback />}>
-              <Result
-                searchResult={searchResult}
-                fetchResult={fetchResult}
-                initResult={initResult}
-                loading={loading}
-              />
-            </ErrorBoundary>
-          )}
+          <StyledWrapper>
+            <SearchArea
+              isFloating={isFloating}
+              setIsFloating={setIsFloating}
+              fetchResult={fetchResult}
+              initResult={initResult}
+            />
+            {isFloating && (
+              <ErrorBoundary fallback={<ResultErrorFallback />}>
+                <Result
+                  searchResult={searchResult}
+                  fetchResult={fetchResult}
+                  initResult={initResult}
+                  loading={loading}
+                />
+              </ErrorBoundary>
+            )}
+          </StyledWrapper>
         </div>
       </StyledSearchPage>
     </SearchKeywordProvider>
   );
 }
+
+const StyledWrapper = styled.div`
+  box-shadow: ${(props) => props.theme.shadow};
+  border-radius: 20px;
+`;
 
 const StyledSearchPage = styled.div`
   padding: 50px 100px;
