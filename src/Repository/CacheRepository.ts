@@ -22,7 +22,7 @@ class CacheRepository implements CacheRepositoryInterface {
       if (!item) {
         const res = await getResult(keyword);
         const cachedResult = this.save(keyword, res);
-        return { data: cachedResult.result, error: undefined };
+        return { data: cachedResult.data, error: undefined };
       }
 
       const parsedItem = JSON.parse(item);
@@ -30,10 +30,10 @@ class CacheRepository implements CacheRepositoryInterface {
       if (!isCachedResult(parsedItem) || !isValidateExpiredTime(parsedItem.expired_time)) {
         const res = await getResult(keyword);
         const cachedResult = this.save(keyword, res);
-        return { data: cachedResult.result, error: undefined };
+        return { data: cachedResult.data, error: undefined };
       }
 
-      return { data: parsedItem.result, error: undefined };
+      return { data: parsedItem.data, error: undefined };
     } catch (error) {
       if (error instanceof AxiosError) {
         if (!error.response) {
@@ -56,14 +56,14 @@ class CacheRepository implements CacheRepositoryInterface {
     }
   }
 
-  save(keyword: string, result: TResult) {
+  save(keyword: string, data: TResult) {
     try {
       const SECOND = 1000;
       const MINUTE = SECOND * 60;
       const HOUR = MINUTE * 60;
       const expired_time = Date.now() + HOUR;
 
-      const cachedResult: TCachedResult = { result, expired_time };
+      const cachedResult: TCachedResult = { data, expired_time };
       this.#storage.setItem(keyword, JSON.stringify(cachedResult));
       return cachedResult;
     } catch (error) {
