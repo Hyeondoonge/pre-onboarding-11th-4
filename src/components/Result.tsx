@@ -3,30 +3,21 @@ import ErrorBoundary from './ErrorBoundary';
 import ResultErrorFallback from './ResultErrorFallback';
 import { useEffect, useRef, useState } from 'react';
 import { TResultResponse } from 'types/common';
+import { useSearchKeywordContext } from 'hooks/useSearchKeywordContext';
 
 interface ResultProps {
-  keyword: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
   searchResult: TResultResponse;
   fetchResult: (keyword: string) => void;
   initResult: () => void;
   loading: boolean;
 }
 interface ListProps {
-  keyword: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
   searchResult: TResultResponse;
   loading: boolean;
 }
 
-export default function Result({
-  keyword,
-  setKeyword,
-  searchResult,
-  fetchResult,
-  initResult,
-  loading
-}: ResultProps) {
+export default function Result({ searchResult, fetchResult, initResult, loading }: ResultProps) {
+  const { keyword } = useSearchKeywordContext();
   useEffect(() => {
     if (keyword) fetchResult(keyword);
 
@@ -45,18 +36,14 @@ export default function Result({
         <div />
       </StyledBorder>
       <ErrorBoundary fallback={<ResultErrorFallback />}>
-        <List
-          keyword={keyword}
-          setKeyword={setKeyword}
-          searchResult={searchResult}
-          loading={loading}
-        />
+        <List searchResult={searchResult} loading={loading} />
       </ErrorBoundary>
     </StyledResult>
   );
 }
 
-function List({ keyword, setKeyword, searchResult, loading }: ListProps) {
+function List({ searchResult, loading }: ListProps) {
+  const { keyword, setKeyword } = useSearchKeywordContext();
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const { data, error } = searchResult;
   const matchingKeyword = useRef(keyword);

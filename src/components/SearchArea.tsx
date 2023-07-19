@@ -3,12 +3,11 @@ import { BiSearch } from 'react-icons/bi';
 import { RiDeleteBack2Line } from 'react-icons/ri';
 import { ChangeEvent, useEffect } from 'react';
 import useDebounce from 'hooks/useDebounce';
+import { useSearchKeywordContext } from 'hooks/useSearchKeywordContext';
 
 interface SearchAreaProps {
   isFocused: boolean;
   setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
-  keyword: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
   fetchResult: (keyword: string) => void;
   initResult: () => void;
 }
@@ -16,11 +15,10 @@ interface SearchAreaProps {
 export default function SearchArea({
   isFocused,
   setIsFocused,
-  keyword,
-  setKeyword,
   fetchResult,
   initResult
 }: SearchAreaProps) {
+  const { keyword, setKeyword } = useSearchKeywordContext();
   const debounce = useDebounce();
 
   const changeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {

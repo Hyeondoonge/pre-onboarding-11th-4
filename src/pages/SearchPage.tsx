@@ -2,13 +2,13 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Result from 'components/Result';
 import ResultErrorFallback from 'components/ResultErrorFallback';
 import SearchArea from 'components/SearchArea';
+import SearchKeywordProvider from 'contexts/SearchKeywordProvider';
 import useSearchResult from 'hooks/useSearchResult';
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 export default function SearchPage() {
   const [isFocused, setIsFocused] = useState(false);
-  const [keyword, setKeyword] = useState('');
   const { searchResult, fetchResult, initResult, loading } = useSearchResult();
 
   useEffect(() => {
@@ -23,33 +23,31 @@ export default function SearchPage() {
   }, []);
 
   return (
-    <StyledSearchPage>
-      <div>
-        <h2>국내 모든 임상시험 검색하고 온라인으로 참여하기</h2>
-      </div>
-      <div>
-        <SearchArea
-          isFocused={isFocused}
-          setIsFocused={setIsFocused}
-          keyword={keyword}
-          setKeyword={setKeyword}
-          fetchResult={fetchResult}
-          initResult={initResult}
-        />
-        {isFocused && (
-          <ErrorBoundary fallback={<ResultErrorFallback />}>
-            <Result
-              keyword={keyword}
-              searchResult={searchResult}
-              setKeyword={setKeyword}
-              fetchResult={fetchResult}
-              initResult={initResult}
-              loading={loading}
-            />
-          </ErrorBoundary>
-        )}
-      </div>
-    </StyledSearchPage>
+    <SearchKeywordProvider>
+      <StyledSearchPage>
+        <div>
+          <h2>국내 모든 임상시험 검색하고 온라인으로 참여하기</h2>
+        </div>
+        <div>
+          <SearchArea
+            isFocused={isFocused}
+            setIsFocused={setIsFocused}
+            fetchResult={fetchResult}
+            initResult={initResult}
+          />
+          {isFocused && (
+            <ErrorBoundary fallback={<ResultErrorFallback />}>
+              <Result
+                searchResult={searchResult}
+                fetchResult={fetchResult}
+                initResult={initResult}
+                loading={loading}
+              />
+            </ErrorBoundary>
+          )}
+        </div>
+      </StyledSearchPage>
+    </SearchKeywordProvider>
   );
 }
 
