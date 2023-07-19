@@ -1,19 +1,21 @@
 import { styled } from 'styled-components';
 import ErrorBoundary from './ErrorBoundary';
 import ResultErrorFallback from './ResultErrorFallback';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { TResultResponse } from 'types/common';
-import { cacheRepository } from 'Repository/CacheRepository';
-import useDebounce from 'hooks/useDebounce';
 
 interface ResultProps {
   keyword: string;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
+  searchResult: TResultResponse;
 }
 interface ListProps {
   keyword: string;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
+  searchResult: TResultResponse;
 }
 
-export default function Result({ keyword }: ResultProps) {
+export default function Result({ keyword, setKeyword, searchResult }: ResultProps) {
   return (
     <StyledResult
       onClick={(event) => {
@@ -24,16 +26,16 @@ export default function Result({ keyword }: ResultProps) {
         <div />
       </StyledBorder>
       <ErrorBoundary fallback={<ResultErrorFallback />}>
-        <List keyword={keyword} />
+        <List keyword={keyword} setKeyword={setKeyword} searchResult={searchResult} />
       </ErrorBoundary>
     </StyledResult>
   );
 }
 
-function List({ keyword }: ListProps) {
+function List({ keyword, setKeyword, searchResult }: ListProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
-  const [searchResult, setSearchResult] = useState<TResultResponse>({ data: [], error: undefined });
   const { data, error } = searchResult;
+  const matchingKeyword = useRef(keyword);
 
   const MAX_LENGTH = 10;
   const RESULT_LENGTH = Math.min(MAX_LENGTH, data.length);
@@ -41,8 +43,8 @@ function List({ keyword }: ListProps) {
   const updateFocusedItem = (index: number) => {
     if (!data[index]) return;
     setSelectedIndex(index);
+    setKeyword(data[index]?.sickNm ?? '');
     // TODO: data[index] undefined 오류
-    (document.querySelector('input') as HTMLInputElement).value = data[index]?.sickNm ?? '';
   };
 
   useEffect(() => {
@@ -62,22 +64,10 @@ function List({ keyword }: ListProps) {
     };
   }, [selectedIndex, RESULT_LENGTH]);
 
-  const debounce = useDebounce();
-
   useEffect(() => {
-    const fetchResult = async () => {
-      if (keyword === '') {
-        setSearchResult({ data: [], error: undefined });
-        return;
-      }
-      setSelectedIndex(-1);
-
-      const res = await cacheRepository.get(keyword);
-      setSearchResult(res);
-    };
-
-    debounce(fetchResult, 500);
-  }, [keyword]);
+    setSelectedIndex(-1);
+    matchingKeyword.current = keyword;
+  }, [searchResult]);
 
   if (error) throw error;
 
@@ -93,7 +83,9 @@ function List({ keyword }: ListProps) {
             keyword={keyword}
             isSelected={selectedIndex === index}
             name={sickNm}
-            handleMouseOver={() => updateFocusedItem(index)}
+            handleMouseOver={() => {
+              setSelectedIndex(index);
+            }}
           />
         ))}
     </StyledList>

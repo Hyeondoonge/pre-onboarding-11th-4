@@ -1,28 +1,34 @@
 import { styled } from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
 import { RiDeleteBack2Line } from 'react-icons/ri';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 
 interface SearchAreaProps {
   isFocused: boolean;
   setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
   keyword: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
+  fetchResult: (keyword: string) => void;
+  initResult: () => void;
 }
 
 export default function SearchArea({
   isFocused,
   setIsFocused,
   keyword,
-  setKeyword
+  setKeyword,
+  fetchResult,
+  initResult
 }: SearchAreaProps) {
   const changeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setKeyword(value);
+    fetchResult(value);
   };
 
   const clickDeleteButtonHandler = () => {
     setKeyword('');
+    initResult();
   };
 
   return (

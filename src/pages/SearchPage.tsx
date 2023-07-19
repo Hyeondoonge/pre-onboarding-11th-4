@@ -1,13 +1,34 @@
+import { cacheRepository } from 'Repository/CacheRepository';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Result from 'components/Result';
 import ResultErrorFallback from 'components/ResultErrorFallback';
 import SearchArea from 'components/SearchArea';
+import useDebounce from 'hooks/useDebounce';
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+import { TResultResponse } from 'types/common';
 
 export default function SearchPage() {
   const [isFocused, setIsFocused] = useState(false);
   const [keyword, setKeyword] = useState('');
+  const [searchResult, setSearchResult] = useState<TResultResponse>({ data: [], error: undefined });
+
+  const debounce = useDebounce();
+
+  const fetchResult = (keyword: string) =>
+    debounce(async () => {
+      if (keyword === '') {
+        setSearchResult({ data: [], error: undefined });
+        return;
+      }
+
+      const res = await cacheRepository.get(keyword);
+      setSearchResult(res);
+    }, 500);
+
+  const initResult = () => {
+    setSearchResult({ data: [], error: undefined });
+  };
 
   useEffect(() => {
     const handleWindowClick = () => {
@@ -31,10 +52,12 @@ export default function SearchPage() {
           setIsFocused={setIsFocused}
           keyword={keyword}
           setKeyword={setKeyword}
+          fetchResult={fetchResult}
+          initResult={initResult}
         />
         {isFocused && (
           <ErrorBoundary fallback={<ResultErrorFallback />}>
-            <Result keyword={keyword} />
+            <Result keyword={keyword} searchResult={searchResult} setKeyword={setKeyword} />
           </ErrorBoundary>
         )}
       </div>
