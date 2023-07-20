@@ -4,26 +4,52 @@
 
 7.17 ~ 7.19 약 3일 진행
 
-## [배포 사이트](https://main--idyllic-axolotl-bc9f8d.netlify.app/)
-
-- ❗️ 최근 검색어 문구가 사이트에서 보이지만 현재 구현되지 않은 상태입니다. 하지만 서비스는 문제없이 이용하실 수 있습니다 :)
+<br>
 
 ## 목차
+
+### [🔗 배포 사이트](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EB%B0%B0%ED%8F%AC-%EC%82%AC%EC%9D%B4%ED%8A%B8)
+
+### [🪄 서비스 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-서비스-기능)
 
 ### [⛳️ 시작 방법](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EF%B8%8F-%EC%8B%9C%EC%9E%91-%EB%B0%A9%EB%B2%95-1)
 
 ### [⚒️ 기술 스택](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EF%B8%8F-%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D-1)
 
-### [✨ 주요 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-1)
+### [✨ 주요 구현 사항](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-주요-구현-사항)
 
-- [필수 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%ED%95%84%EC%88%98-%EA%B8%B0%EB%8A%A5)
-- [개인 추가 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EA%B0%9C%EC%9D%B8-%EC%B6%94%EA%B0%80-%EA%B8%B0%EB%8A%A5)
+- [필수 구현](https://github.com/Hyeondoonge/pre-onboarding-11th-4#필수-구현)
+- [개인 추가 구현](https://github.com/Hyeondoonge/pre-onboarding-11th-4#개인-추가-구현)
 
 ### [？ 고민했던 부분](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-%EA%B3%A0%EB%AF%BC%ED%96%88%EB%8D%98-%EB%B6%80%EB%B6%84-1)
 
 - [API 호출별로 로컬 캐싱 구현](https://github.com/Hyeondoonge/pre-onboarding-11th-4#api-%ED%98%B8%EC%B6%9C%EB%B3%84%EB%A1%9C-%EB%A1%9C%EC%BB%AC-%EC%BA%90%EC%8B%B1-%EA%B5%AC%ED%98%84---cacherepository)
 - [입력마다 API 호출하지 않도록 API 호출 횟수를 줄이는 전략 수립 및 실행](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EC%9E%85%EB%A0%A5%EB%A7%88%EB%8B%A4-api-%ED%98%B8%EC%B6%9C%ED%95%98%EC%A7%80-%EC%95%8A%EB%8F%84%EB%A1%9D-api-%ED%98%B8%EC%B6%9C-%ED%9A%9F%EC%88%98%EB%A5%BC-%EC%A4%84%EC%9D%B4%EB%8A%94-%EC%A0%84%EB%9E%B5-%EC%88%98%EB%A6%BD-%EB%B0%8F-%EC%8B%A4%ED%96%89---usedebounce)
 - [키보드만으로 추천 검색어들로 이동 가능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%ED%82%A4%EB%B3%B4%EB%93%9C%EB%A7%8C%EC%9C%BC%EB%A1%9C-%EC%B6%94%EC%B2%9C-%EA%B2%80%EC%83%89%EC%96%B4%EB%93%A4%EB%A1%9C-%EC%9D%B4%EB%8F%99-%EA%B0%80%EB%8A%A5---result)
+
+ <br>
+
+## [🔗 배포 사이트](https://main--idyllic-axolotl-bc9f8d.netlify.app/)
+
+- ❗️ 최근 검색어 문구가 사이트에서 보이지만 현재 구현되지 않은 상태입니다. 하지만 서비스는 문제없이 이용하실 수 있습니다 :)
+
+<br>
+
+## 🪄 서비스 기능
+
+| 검색어 입력                                                                                                                                                   | 설명                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![검색어 입력:검색창여닫기 gif](https://github.com/Hyeondoonge/pre-onboarding-11th-4/assets/55647436/3e176d9c-0dec-461c-a1ae-aaa478083a0a) | - 검색창 클릭 시 결과 창이 열립니다. <br> - 검색 창 바깥영역 클릭 시 결과창은 닫힙니다. <br> - 키워드 입력 시 키워드를 포함하는 검색 결과를 보여줍니다. |
+
+| 입력된 키워드 지우기                                                                                                                  | 설명                                                                                                            |
+| ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| ![키워드 지우기 gif](https://github.com/Hyeondoonge/pre-onboarding-11th-4/assets/55647436/477c7369-e89e-4387-b2f5-b4e8890b5180) | - 입력된 키워드가 있다면 삭제 버튼이 우측에 나타납니다. <br> - 버튼을 클릭하면 입력된 키워드 전체가 지워집니다. |
+
+| 키를 이용한 결과 탐색                                                                                                                                    | 설명                                                                                                                                                                                                                       |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![키보드 이동 및 상호작용 gif](https://github.com/Hyeondoonge/pre-onboarding-11th-4/assets/55647436/1023c762-2c8f-47c4-af32-ee66dc2aa336) | - ⬆️, ⬇️ 두 방향키를 이용해 검색 결과를 탐색할 수 있습니다. <br> - 방향키로 이동 시, 포커스된 내용으로<br>키워드가 업데이트됩니다. <br> - 포커스된 행을 클릭하거나, 돋보기 버튼 <br>클릭 시 관련 문서 페이지로 이동됩니다. |
+
+<br>
 
 ## ⛳️ 시작 방법
 
@@ -59,6 +85,8 @@ $ npm build
 
 - https://github.com/walking-sunset/assignment-api
 
+<br>
+
 ## ⚒️ 기술 스택
 
 - React.js
@@ -66,15 +94,19 @@ $ npm build
 - styled-components
 - axios
 
-## ✨ 주요 기능
+<br>
 
-### 필수 기능
+## ✨ 주요 구현 사항
+
+### 필수 구현
 
 - API 요청 응답에 대한 로컬 캐싱 구현
 - debounce를 사용해 UX 개선 및 불필요한 통신 비용 발생 문제 개선
 - 위, 아래 방향키 입력 시 검색어를 탐색할 수 있는 기능 구현
 
-### 개인 추가 기능
+<br>
+
+### 개인 추가 구현
 
 - ErrorBoundary를 적용해 검색 API 요청 중 에러 발생 시 전체 UI가 깨지지 않도록 에러 핸들링
   - API 주소가 바르지 않거나, API 서버가 작동하지 않는 등의 상황에서 확인가능합니다
@@ -86,6 +118,8 @@ $ npm build
 - 테마 컨텍스트를 정의하여 라이트/다크 모드 구현
 
   - 화면 오른쪽 상단의 아이콘(해/달)을 눌러 확인가능합니다
+
+<br>
 
 ## ？ 고민했던 부분
 
@@ -111,14 +145,14 @@ Local storage에 저장할 경우 서비스를 나갔다와도 캐싱 데이터�
 직접 접근해서 수정하는 경우가 있을 수 있습니다. 이를 대비해 데이터의 형식을 확인하여 옳은 값을 가져오도록 했습니다.
 크게 Null 인지, 데이터 형식이 옳은지, 유효기간이 지나지 않았는지를 검사하도록 구현했습니다.
 
----
+<br>
 
 ### 입력마다 API 호출하지 않도록 API 호출 횟수를 줄이는 전략 수립 및 실행 ([< > useDebounce](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/src/hooks/useDebounce.ts))
 
 연속된 입력이 발생할 경우 불필요한 통신 비용이 발생할 수 있습니다. 이러한 상황에서 사용할 수 있는 debounce 기법을 이용했습니다.
 추상화를 위해 훅으로 분리했습니다.
 
----
+<br>
 
 ### 키보드만으로 추천 검색어들로 이동 가능 ([< > Result](https://github.com/Hyeondoonge/pre-onboarding-11th-4/blob/devleop/src/components/Result/Result.tsx))
 
