@@ -8,15 +8,15 @@
 
 ## 목차
 
-### [🔗 배포 사이트](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EB%B0%B0%ED%8F%AC-%EC%82%AC%EC%9D%B4%ED%8A%B8)
+### [🔗 배포 사이트](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-배포-사이트-1)
 
-### [🪄 서비스 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-서비스-기능)
+### [🪄 서비스 기능](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-서비스-기능-1)
 
 ### [⛳️ 시작 방법](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EF%B8%8F-%EC%8B%9C%EC%9E%91-%EB%B0%A9%EB%B2%95-1)
 
 ### [⚒️ 기술 스택](https://github.com/Hyeondoonge/pre-onboarding-11th-4#%EF%B8%8F-%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D-1)
 
-### [✨ 주요 구현 사항](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-주요-구현-사항)
+### [✨ 주요 구현 사항](https://github.com/Hyeondoonge/pre-onboarding-11th-4#-주요-구현-사항-1)
 
 - [필수 구현](https://github.com/Hyeondoonge/pre-onboarding-11th-4#필수-구현)
 - [개인 추가 구현](https://github.com/Hyeondoonge/pre-onboarding-11th-4#개인-추가-구현)
